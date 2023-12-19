@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: street-review
+  datasource:
+    url: jdbc:mysql://semtle.catholic.ac.kr:3306/gdsc_project?useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: gdsc4641
+    password: streetreview
+    hikari:
+      max-lifetime: 1800000
+      maximum-pool-size: 9
