@@ -28,10 +28,10 @@ public enum StatusCode {
     }
 
     public String toString() {
-        return "{" +
-                "\"code\" : " + "\""+ statusCode +"\"" +
-                "\"status\" : " + "\""+status+"\"" +
-                "\"message\" : " + "\""+message+"\"" +
-                "}";
+        return "{ " +
+                "\n\"code\" : " + "\""+ statusCode +"\"" +
+                "\n\"status\" : " + "\""+status+"\"" +
+                "\n\"message\" : " + "\""+message+"\"" +
+                "\n}";
     }
 }
