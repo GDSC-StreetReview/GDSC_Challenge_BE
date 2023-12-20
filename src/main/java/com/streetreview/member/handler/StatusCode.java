@@ -12,6 +12,7 @@ public enum StatusCode {
     UNAUTHORIZED (400, "로그인 후 이용가능합니다.", HttpStatus.UNAUTHORIZED),
     EXPIRED_JWT(400, "기존 토큰이 만료되었습니다. 해당 토큰을 가지고 /token/refresh 링크로 이동 후 토큰을 재발급 받으세요.", HttpStatus.UNAUTHORIZED),
     INVALID_DATA_FORMAT(400, "형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
+    SLACK_ERROR_TEST(400, "앞으로 에러나면 여기에 출몰", HttpStatus.BAD_REQUEST)
     ;
     @Getter
     private int statusCode;
