@@ -8,6 +8,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Component
@@ -16,16 +18,18 @@ public class GoogleAuth {
     private String clientId;
     @Value("${oauth2.google.client-secret}")
     private String clientSecret;
-    private static final String REDIRECT_URI = "http://localhost:8080/member/oauth2/google";
+
+    public static final String GOOGLE = "google";
+    public static final String REDIRECT_URI = "http://semtle.catholic.ac.kr:3000";
 
     public static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
     public static final String MEMBER_INFO_URL = "https://oauth2.googleapis.com/tokeninfo";
 
     public ResGoogleToken getGoogleOauthToken(String code) {
-        System.out.println("code = " + code);
+        String decode = URLDecoder.decode(code, StandardCharsets.UTF_8);
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("code", code);
+        params.add("code", decode);
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
         params.add("redirect_uri", REDIRECT_URI);

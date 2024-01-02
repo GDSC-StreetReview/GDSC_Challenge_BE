@@ -39,7 +39,8 @@ public class JwtCreator {
         String accessToken = getToken(member, claims, now, accessTokenValidTime, accessSecretKey);
         return Token.builder()
                 .accessToken(accessToken)
-                .key(member.getEmail()).build();
+                .key(member.getEmail())
+                .grantType(member.getRole().toString()).build();
     }
 
     private String getToken(Member member, Claims claims, Date currentTime, long tokenValidTime, String secretKey) {
