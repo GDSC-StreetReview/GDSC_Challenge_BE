@@ -1,6 +1,7 @@
 package com.streetreview.member.service;
 
 import com.streetreview.member.dto.GoogleAuthDto;
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.dto.ResGoogleToken;
 import com.streetreview.member.dto.Role;
 import com.streetreview.member.entity.Member;
@@ -32,9 +33,21 @@ public class MemberServiceImpl implements MemberService{
         ResGoogleToken resGoogleToken = googleAuth.getGoogleOauthToken(code);
 
         GoogleAuthDto googleAuthDto = googleAuth.getGoogleOauthTokenInfo(resGoogleToken.getId_token());
+
         Optional<Token> token = memberRepository.findByEmail(googleAuthDto.getEmail()).map(member -> verifyOauthAccount(member.getEmail()));
 
+
         return token.orElseGet(() -> signup(googleAuthDto));
+    }
+
+    @Override
+    public MemberProfileDto getMemberProfile(Long memberId) {
+        Optional<MemberProfileDto> memberProfileDto = memberRepository.findByMemberId(memberId).map(Member::toMemberProfileDto);
+
+        if(memberProfileDto.isEmpty())
+            throw new CustomException(StatusCode.FORBIDDEN);
+
+        return memberProfileDto.get();
     }
 
     private Token signup(GoogleAuthDto googleAuthDto) {

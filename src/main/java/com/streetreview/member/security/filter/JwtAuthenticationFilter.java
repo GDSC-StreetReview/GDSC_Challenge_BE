@@ -4,7 +4,7 @@ package com.streetreview.member.security.filter;
 import com.streetreview.member.security.JwtAuthenticationToken;
 import com.streetreview.member.security.JwtInfoExtractor;
 import com.streetreview.member.security.JwtValidator;
-import com.streetreview.member.security.dto.AuthorizerDto;
+import com.streetreview.member.security.dto.ClaimName;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private JwtAuthenticationToken getAuthenticationToken(Claims claims, ServletRequest request) {
         String username = claims.getSubject();
-        String role = claims.get(AuthorizerDto.ClaimName.ROLE.getValue()).toString();
+        String role = claims.get(ClaimName.ROLE.getValue()).toString();
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
         JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(username, null, authorities, claims);
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails((HttpServletRequest) request));

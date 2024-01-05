@@ -1,14 +1,11 @@
 package com.streetreview.member.entity;
 
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.dto.Role;
-import com.streetreview.member.handler.CustomException;
-import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.security.dto.AccountStatus;
-import com.streetreview.member.security.dto.Token;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -61,7 +58,15 @@ public class Member {
         this.accountStatus = accountStatus;
     }
 
-
+    //프로필 조회 DTO
+    public MemberProfileDto toMemberProfileDto() {
+        return MemberProfileDto.builder()
+                .memberId(memberId)
+                .providerId(providerId)
+                .email(email)
+                .nickName(nickName)
+                .picture(picture).build();
+    }
 
 
 }

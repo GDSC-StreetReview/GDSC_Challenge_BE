@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 public enum StatusCode {
     OK(200, "OK", HttpStatus.OK),
     MALFORMED(400, "형식이 올바르지 않습니다.", HttpStatus.BAD_REQUEST),
-
     PASSWORD_NOT_FOUND (400, "비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
     FORBIDDEN(403, "해당 요청에 대한 권한이 없습니다.", HttpStatus.FORBIDDEN),
     UNAUTHORIZED (400, "로그인 후 이용가능합니다.", HttpStatus.UNAUTHORIZED),

@@ -1,6 +1,7 @@
 package com.streetreview.member.security;
 
-import com.streetreview.member.security.dto.AuthorizerDto;
+import com.streetreview.member.repository.MemberRepository;
+import com.streetreview.member.security.dto.ClaimName;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +22,11 @@ public class JwtInfoExtractor {
         return Jwts.parser().setSigningKey(accessKey.getBytes()).parseClaimsJws(token).getBody();
     }
 
-    public static AuthorizerDto getSuiteAuthorizer() {
+    public static Long getStrvMember() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken) {
             Claims claims = ((JwtAuthenticationToken) authentication).getClaims();
-
-
-
-            return AuthorizerDto.builder()
-                    .memberId(Long.parseLong(claims.get(AuthorizerDto.ClaimName.ID.getValue()).toString()))
-                    .email(authentication.getName())
-                    .nickName(claims.get(AuthorizerDto.ClaimName.NICKNAME.getValue()).toString())
-                    .accountStatus(claims.get(AuthorizerDto.ClaimName.ACCOUNTSTATUS.getValue()).toString())
-                    .role(AuthorizerDto.ClaimName.ROLE.getValue())
-                    .build();
-
+            return Long.parseLong(claims.get(ClaimName.ID.getValue()).toString());
         }
         return null;
     }
