@@ -54,7 +54,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(claims, request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-
     }
 
     private JwtAuthenticationToken getAuthenticationToken(Claims claims, ServletRequest request) {

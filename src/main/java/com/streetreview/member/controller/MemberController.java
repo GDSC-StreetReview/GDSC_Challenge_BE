@@ -1,6 +1,8 @@
 package com.streetreview.member.controller;
 
+import com.streetreview.common.dto.Message;
 import com.streetreview.member.dto.MemberProfileDto;
+import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.security.dto.Token;
 import com.streetreview.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +22,17 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/oauth2/google")
-    public ResponseEntity<Token> OAuthGoogleLogin(@RequestHeader("code") String code) {
-        return ResponseEntity.ok(memberService.getOauthToken(code));
+    public ResponseEntity<Message> OAuthGoogleLogin(@RequestHeader("code") String code) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getOauthToken(code)));
     }
 
     @GetMapping("/m/profile")
-    public ResponseEntity<MemberProfileDto> myProfile() {
-        return ResponseEntity.ok(memberService.getMemberProfile(getStrvMember()));
+    public ResponseEntity<Message> myProfile() {
+        return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getMemberProfile(getStrvMember())));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Message> test() {
+        return ResponseEntity.ok(new Message(StatusCode.OK));
     }
 }

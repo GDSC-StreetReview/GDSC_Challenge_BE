@@ -26,8 +26,10 @@ public class JwtInfoExtractor {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken) {
             Claims claims = ((JwtAuthenticationToken) authentication).getClaims();
+            claims.get(ClaimName.ID.getValue());
             return Long.parseLong(claims.get(ClaimName.ID.getValue()).toString());
         }
+
         return null;
     }
 }

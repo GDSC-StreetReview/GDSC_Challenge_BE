@@ -36,7 +36,6 @@ public class MemberServiceImpl implements MemberService{
 
         Optional<Token> token = memberRepository.findByEmail(googleAuthDto.getEmail()).map(member -> verifyOauthAccount(member.getEmail()));
 
-
         return token.orElseGet(() -> signup(googleAuthDto));
     }
 
