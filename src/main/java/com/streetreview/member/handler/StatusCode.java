@@ -15,7 +15,8 @@ public enum StatusCode {
     DORMANT_ACCOUNT(423, "이 계정은 휴먼 계정입니다.", HttpStatus.LOCKED),
     DISABLED_ACCOUNT(403, "삭제된 계정입니다.", HttpStatus.FORBIDDEN),
     USERNAME_NOT_FOUND(404, "가입된 이메일이 없습니다.", HttpStatus.NOT_FOUND),
-    SLACK_ERROR_TEST(400, "앞으로 에러나면 여기에 출몰", HttpStatus.BAD_REQUEST)
+    SLACK_ERROR_TEST(400, "앞으로 에러나면 여기에 출몰", HttpStatus.BAD_REQUEST),
+    ALREADY_EXIST(400, "이미 존재하는 데이터입니다.", HttpStatus.BAD_REQUEST)
     ;
     @Getter
     private int statusCode;

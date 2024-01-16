@@ -55,6 +55,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()// 요청에 대한 사용권한 체크
                 .antMatchers("/member/m/**").authenticated()
                 .antMatchers("/member/**").permitAll()
+                .antMatchers("/street/**").permitAll()
                 .and()
                 .cors()
                 .and()

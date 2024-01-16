@@ -22,8 +22,6 @@ public class MemberController {
         return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getOauthToken(code)));
     }
 
-
-
     @GetMapping("/m/profile")
     public ResponseEntity<Message> myProfile() {
         return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getMemberProfile(getStrvMember())));
