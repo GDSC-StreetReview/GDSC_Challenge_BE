@@ -31,19 +31,19 @@ public class ReviewController {
     }
 
     @GetMapping("/all")// 전체 리뷰 보여주기
-    public ResponseEntity<List<Review>> getAllReviews() {
+    public ResponseEntity<Message> getAllReviews() {
         List<Review> reviews = reviewRepository.findAll();
-        return ResponseEntity.ok(reviews);
+        return ResponseEntity.ok(new Message(StatusCode.OK, reviews));
     }
 
     @GetMapping("/userReview") // 특정 사용자의 리뷰 보여주기
-    public ResponseEntity<List<Review>> getUserReviews(@RequestParam Long memberId) {
+    public ResponseEntity<Message> getUserReviews(@RequestParam Long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
 
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             List<Review> userReviews = reviewRepository.findByMember(member);
-            return ResponseEntity.ok(userReviews);
+            return ResponseEntity.ok(new Message(StatusCode.OK, userReviews));
         } else {
             return ResponseEntity.notFound().build();
         }
