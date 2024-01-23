@@ -1,5 +1,6 @@
 package com.streetreview.review.dto;
 
+import com.streetreview.review.entity.Review;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,12 @@ public class ReviewDto {
         this.photo = photo;
         this.streetId = streetId;
         this.memberId = memberId;
+    }
+
+    public Review toReviewEntity() {
+        return Review.builder()
+                .content(content)
+                .photo(photo)
+                .build();
     }
 }
