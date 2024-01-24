@@ -17,7 +17,7 @@ public enum StatusCode {
     USERNAME_NOT_FOUND(404, "가입된 이메일이 없습니다.", HttpStatus.NOT_FOUND),
     SLACK_ERROR_TEST(400, "앞으로 에러나면 여기에 출몰", HttpStatus.BAD_REQUEST),
     ALREADY_EXIST(400, "이미 존재하는 데이터입니다.", HttpStatus.BAD_REQUEST),
-    NOT_FOUND_MEMBER(404,"존재하지 않는 회원입니다.",HttpStatus.NOT_FOUND)
+    NOT_FOUND(404,"존재하지 않는 데이터입니다.",HttpStatus.NOT_FOUND)
     ;
     @Getter
     private int statusCode;

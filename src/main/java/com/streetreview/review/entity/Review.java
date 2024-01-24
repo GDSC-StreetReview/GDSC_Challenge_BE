@@ -1,7 +1,7 @@
 package com.streetreview.review.entity;
 
 import com.streetreview.member.entity.Member;
-import com.streetreview.street.entity.Street;
+import com.streetreview.review.dto.ResReviewListDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,23 +35,36 @@ public class Review {
     @LastModifiedDate
     private Date updatedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "street_id")
-    private Street street;
+    private Double x;
+
+    private Double y;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Review(Long reviewId, String content, String photo, int likey, Date createdDate, Date updatedDate, Street street, Member member) {
+    public Review(Long reviewId, String content, String photo, int likey, Date createdDate, Date updatedDate, Double x, Double y, Member member) {
         this.reviewId = reviewId;
         this.content = content;
         this.photo = photo;
         this.likey = likey;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.street = street;
+        this.x = x;
+        this.y = y;
         this.member = member;
+    }
+
+    public void writeBy(Member member) {
+        this.member = member;
+    }
+
+    public ResReviewListDto toResReviewListDto() {
+        return ResReviewListDto.builder()
+                .content(content)
+                .likey(likey)
+                .createdDate(createdDate)
+                .updatedDate(updatedDate).build();
     }
 }

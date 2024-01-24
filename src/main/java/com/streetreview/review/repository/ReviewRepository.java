@@ -10,6 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByMember_MemberId(Long memberId);
     List<Review> findByMember(Member member);
+
+    List<Review> findByXAndYOrderByCreatedDateDesc(Double x, Double Y);
+
+    //select * from Review where x = ? and y = ? order by createdDate desc
 
 }
