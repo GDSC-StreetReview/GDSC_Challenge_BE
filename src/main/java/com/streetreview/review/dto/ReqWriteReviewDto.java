@@ -7,25 +7,27 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ReviewDto {
+public class ReqWriteReviewDto {
 
     private String content;
     private String photo;
-    private Long streetId;
-    private Long memberId;
+    private Double x;
+    private Double y;
 
     @Builder
-    public ReviewDto(String content, String photo,Long streetId, Long memberId) {
+    public ReqWriteReviewDto(String content, String photo, Double x, Double y) {
         this.content = content;
         this.photo = photo;
-        this.streetId = streetId;
-        this.memberId = memberId;
+        this.x = x;
+        this.y = y;
     }
 
     public Review toReviewEntity() {
         return Review.builder()
                 .content(content)
                 .photo(photo)
+                .x(x)
+                .y(y)
                 .build();
     }
 }

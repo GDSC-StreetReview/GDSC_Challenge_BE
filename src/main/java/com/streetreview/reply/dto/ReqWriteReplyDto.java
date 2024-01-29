@@ -1,23 +1,33 @@
 package com.streetreview.reply.dto;
 
+import com.streetreview.reply.entity.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class ReqWriteDto {
+public class ReqWriteReplyDto {
 
-    private String reply_content;
-    private String reply_photo;
-    private Long member_id;
-    private Long review_id;
+    private Long reviewId;
+    private String replyContent;
+    private String replyPhoto;
 
     @Builder
-    public ReviewDto(String reply_content, String reply_photo, Long member_id, Long review_id) {
-        this.reply_content = reply_content;
-        this.reply_photo = reply_photo;
-        this.review_id = review_id;
-        this.
+    public ReqWriteReplyDto(Long reviewId, String replyContent, String replyPhoto) {
+        this.reviewId = reviewId;
+        this.replyContent = replyContent;
+        this.replyPhoto = replyPhoto;
+    }
+
+
+    public Reply toReplyEntity() {
+        return Reply.builder()
+                .replyContent(replyContent)
+                .replyPhoto(replyPhoto)
+                .replyLikey(0)
+                .build();
     }
 }

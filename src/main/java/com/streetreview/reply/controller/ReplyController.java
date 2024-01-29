@@ -1,23 +1,30 @@
-package com.streetreview.comment.controller;
+package com.streetreview.reply.controller;
 
-import com.streetreview.comment.service.CommentService;
+
 import com.streetreview.common.dto.Message;
+import com.streetreview.member.handler.StatusCode;
+import com.streetreview.reply.dto.ReqWriteReplyDto;
+import com.streetreview.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RestController
 @RequiredArgsConstructor
 @Component
-@RequestMapping("/comment")
-public class CommentController {
+@RequestMapping("/reply")
+public class ReplyController {
 
-    private final CommentService commentService;
-
+    private final ReplyService replyServiceImpl;
     @PostMapping("/write") // 댓글 작성
-    public ResponseEntity(Message) writeComment(@RequestBody )
+    public ResponseEntity<Message> writeReply(@RequestBody ReqWriteReplyDto reqWriteReplyDto) {
+        replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
+
+
+
 }

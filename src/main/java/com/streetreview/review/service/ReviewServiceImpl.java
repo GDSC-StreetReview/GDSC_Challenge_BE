@@ -7,7 +7,7 @@ import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.repository.MemberRepository;
 import com.streetreview.review.dto.ReqStreetPointDto;
 import com.streetreview.review.dto.ResReviewListDto;
-import com.streetreview.review.dto.ReviewDto;
+import com.streetreview.review.dto.ReqWriteReviewDto;
 import com.streetreview.review.entity.Review;
 import com.streetreview.review.repository.ReviewRepository;
 import com.streetreview.street.repository.StreetRepository;
@@ -29,16 +29,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public void writeReview(ReviewDto reviewDto) {
+    public void writeReview(ReqWriteReviewDto reqWriteReviewDto, Long memberId) {
 
         //회원 검색
-        Member member = memberRepository.findById(reviewDto.getMemberId())
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
-        Review review = reviewDto.toReviewEntity();
+        Review review = reqWriteReviewDto.toReviewEntity();
+        member.addReview(review);
 
-        review.writeBy(member);
-        reviewRepository.save(reviewDto.toReviewEntity());
+        reviewRepository.save(review);
     }
 
     @Override
@@ -47,13 +47,14 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
         return reviewRepository.findByXAndYOrderByCreatedDateDesc(reqStreetPointDto.getX(), reqStreetPointDto.getY())
-                .stream().map(review -> review.toResReviewListDto()).collect(Collectors.toList());
+                .stream().map(review -> review.toResReviewListDto(review.getMember())).collect(Collectors.toList());
 
         /*
             List<ResReviewListDto> reviewListDtoList = new ArrayList<>();
             for(int i = 0; i < reviewList.size(); i++) {
                 Review review = reviewList.get(i);
-                reviewListDtoList.add(review.toResReviewListDto());
+                Member member = review.getMember();
+                reviewListDtoList.add(review.toResReviewListDto(member));
             }
          */
 

@@ -1,4 +1,7 @@
-package com.streetreview.comment.service;
+package com.streetreview.reply.service;
 
-public interface CommentService {
+import com.streetreview.reply.dto.ReqWriteReplyDto;
+
+public interface ReplyService {
+    void writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId);
 }

@@ -1,16 +1,21 @@
 package com.streetreview.review.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.streetreview.member.entity.Member;
+import com.streetreview.reply.entity.Reply;
 import com.streetreview.review.dto.ResReviewListDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +28,7 @@ public class Review {
     private Long reviewId;
 
     @Column(columnDefinition = "text")
+    @ColumnDefault("삭제된 리뷰입니다.")
     private String content;
 
     private String photo;
@@ -30,10 +36,10 @@ public class Review {
     private int likey;
 
     @CreatedDate
-    private Date createdDate;
+    private Timestamp createdDate;
 
     @LastModifiedDate
-    private Date updatedDate;
+    private Timestamp updatedDate;
 
     private Double x;
 
@@ -43,8 +49,16 @@ public class Review {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToMany(
+            mappedBy = "review",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Reply> replyList = new ArrayList<>();
+
     @Builder
-    public Review(Long reviewId, String content, String photo, int likey, Date createdDate, Date updatedDate, Double x, Double y, Member member) {
+    public Review(Long reviewId, String content, String photo, int likey, Timestamp createdDate, Timestamp updatedDate, Double x, Double y, Member member) {
         this.reviewId = reviewId;
         this.content = content;
         this.photo = photo;
@@ -60,11 +74,20 @@ public class Review {
         this.member = member;
     }
 
-    public ResReviewListDto toResReviewListDto() {
+    public ResReviewListDto toResReviewListDto(Member member) {
         return ResReviewListDto.builder()
                 .content(content)
                 .likey(likey)
                 .createdDate(createdDate)
-                .updatedDate(updatedDate).build();
+                .updatedDate(updatedDate)
+                .member(member)
+                .build();
     }
+
+
+    public void addComment(Reply reply) {
+        this.replyList.add(reply);
+        reply.addReview(this);
+    }
+
 }

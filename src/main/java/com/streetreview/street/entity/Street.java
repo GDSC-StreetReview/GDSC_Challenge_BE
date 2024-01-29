@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Document(collection = "street")
 @Entity
+@Document(collection = "street")
 @Getter
 @NoArgsConstructor
 public class Street {
