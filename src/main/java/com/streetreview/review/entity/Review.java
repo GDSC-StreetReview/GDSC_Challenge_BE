@@ -28,7 +28,6 @@ public class Review {
     private Long reviewId;
 
     @Column(columnDefinition = "text")
-    @ColumnDefault("삭제된 리뷰입니다.")
     private String content;
 
     private String photo;

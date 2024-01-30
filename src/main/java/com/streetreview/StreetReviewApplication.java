@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
         "com.streetreview.member",
         "com.streetreview.review",
         "com.streetreview.reply",
-        "com.streetreview.report"
+        "com.streetreview.file"
 })
 @EnableMongoRepositories(basePackages = "com.streetreview.street")
 @SpringBootApplication

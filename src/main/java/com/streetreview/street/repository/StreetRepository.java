@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface StreetRepository extends MongoRepository<Street, String> {
     Optional<Street> findByXAndY(Double X, Double Y);
+    Optional<Street> findByStreetId(String streetId);;
 }
