@@ -21,9 +21,13 @@ public class StreetController {
         return ResponseEntity.ok(new Message(StatusCode.OK, streetService.createStreet(reqStreetCreationDto)));
     }
 
-    @PostMapping("/view")
-    public ResponseEntity<Message> viewStreetPoint(@RequestBody ReqStreetListDto reqStreetListDto) {
-        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getStreetList(reqStreetListDto)));
+    @PostMapping("/near/view")
+    public ResponseEntity<Message> viewNearStreetPoint(@RequestBody ReqStreetListDto reqStreetListDto) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getNearStreetList(reqStreetListDto)));
     }
 
+    @PostMapping("/all/view")
+    public ResponseEntity<Message> viewAllStreetPoint() {
+        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getAllStreetList()));
+    }
 }

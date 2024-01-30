@@ -53,9 +53,11 @@ public class WebSecurityConfig {
         //http.httpBasic().disable(); // 일반적인 루트가 아닌 다른 방식으로 요청시 거절, header에 id, pw가 아닌 token(jwt)을 달고 간다. 그래서 basic이 아닌 bearer를 사용한다.
         http.httpBasic().disable()
                 .authorizeRequests()// 요청에 대한 사용권한 체크
-                .antMatchers("/member/m/**", "/reviews/**", "/reply/**").authenticated()
+                .antMatchers("/member/m/**").authenticated()
+                .antMatchers("/reviews/**").authenticated()
+                .antMatchers("/reply/**").authenticated()
+                .antMatchers("/street/**").authenticated()
                 .antMatchers("/member/**").permitAll()
-                .antMatchers("/street/**").permitAll()
                 .and()
                 .cors()
                 .and()

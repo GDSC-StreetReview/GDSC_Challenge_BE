@@ -6,6 +6,7 @@ import com.streetreview.file.entity.PhotoType;
 import com.streetreview.file.repository.PhotoRepository;
 import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
+import com.streetreview.review.repository.ReviewRepository;
 import com.streetreview.street.dto.ReqStreetCreationDto;
 import com.streetreview.street.dto.ReqStreetIdDto;
 import com.streetreview.street.dto.ReqStreetListDto;
@@ -26,26 +27,38 @@ import java.util.stream.Collectors;
 public class StreetServiceImpl implements StreetService {
     private final StreetRepository streetRepository;
     private final PhotoRepository photoRepository;
+    private final ReviewRepository reviewRepository;
     private static final Double maxDistance = 10000.0; //10km
 
     @Override
     @Transactional
     public ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto) {
         //좌표가 이미 있으면 Exception 던짐
-        streetRepository.findByLocation(new GeoJsonPoint(reqStreetCreationDto.getX(), reqStreetCreationDto.getY()))
+        streetRepository.findByLocation(new GeoJsonPoint(reqStreetCreationDto.getY(), reqStreetCreationDto.getX()))
                 .ifPresent(street -> {throw new CustomException(StatusCode.ALREADY_EXIST);});
         //없으면 저장
         return new ReqStreetIdDto(streetRepository.save(reqStreetCreationDto.toStreetEntity()).getId());
     }
 
     @Override
-    public List<ResStreetListDto> getStreetList(ReqStreetListDto reqStreetListDto) {
+    public List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto) {
         return streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
                 .stream().map(street -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
+                    int reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
+                    return street.toResStreetListDto(photoUrlList, reviewCount);
+                }).collect(Collectors.toList());
+    }
 
-                    return street.toResStreetListDto(photoUrlList);
+    @Override
+    public List<ResStreetListDto> getAllStreetList() {
+        return streetRepository.findAll()
+                .stream().map(street -> {
+                    List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
+                            .stream().map(Photo::getFileUrl).collect(Collectors.toList());
+                    int reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
+                    return street.toResStreetListDto(photoUrlList, reviewCount);
                 }).collect(Collectors.toList());
     }
 }

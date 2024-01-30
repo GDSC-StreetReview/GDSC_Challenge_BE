@@ -12,5 +12,6 @@ public interface StreetService {
 
     ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto);
 
-    List<ResStreetListDto> getStreetList(ReqStreetListDto reqStreetListDto);
+    List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto);
+    List<ResStreetListDto> getAllStreetList();
 }
