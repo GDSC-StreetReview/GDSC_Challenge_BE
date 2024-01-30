@@ -51,13 +51,12 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ResReviewListDto> viewReviewList(ReqStreetPointDto reqStreetPointDto) {
         streetRepository.findByLocation(new GeoJsonPoint(reqStreetPointDto.getY(), reqStreetPointDto.getX()))
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
-        System.out.println("@@ : " + reqStreetPointDto.getX());
 
         return reviewRepository.findByXAndYOrderByCreatedDateDesc(reqStreetPointDto.getX(), reqStreetPointDto.getY())
                 .stream().map(review -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(review.getReviewId()), PhotoType.REVIEW.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    return review.toResReviewListDto(review.getMember(), photoUrlList);
+                    return review.toResReviewListDto(review.getMember().toMemberProfileDto(), photoUrlList);
                 }).collect(Collectors.toList());
 
         /*

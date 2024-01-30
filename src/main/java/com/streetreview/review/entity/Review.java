@@ -1,6 +1,7 @@
 package com.streetreview.review.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.entity.Member;
 import com.streetreview.reply.entity.Reply;
 import com.streetreview.review.dto.ResReviewListDto;
@@ -74,7 +75,7 @@ public class Review {
     }
 
 
-    public ResReviewListDto toResReviewListDto(Member member, List<String> photoList) {
+    public ResReviewListDto toResReviewListDto(MemberProfileDto member, List<String> photoList) {
         return ResReviewListDto.builder()
                 .content(content)
                 .likey(likey)

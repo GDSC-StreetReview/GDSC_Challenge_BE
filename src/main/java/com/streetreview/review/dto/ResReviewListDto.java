@@ -1,6 +1,7 @@
 package com.streetreview.review.dto;
 
 
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,12 +18,12 @@ public class ResReviewListDto {
     private int likey;
     private Timestamp createdDate;
     private Timestamp updatedDate;
-    private Member member;
+    private MemberProfileDto member;
     private List<String> photoList;
 
 
     @Builder
-    public ResReviewListDto(String content, int likey, Timestamp createdDate, Timestamp updatedDate, Member member, List<String> photoList) {
+    public ResReviewListDto(String content, int likey, Timestamp createdDate, Timestamp updatedDate, MemberProfileDto member, List<String> photoList) {
         this.content = content;
         this.likey = likey;
         this.createdDate = createdDate;
