@@ -43,10 +43,20 @@ public class StreetServiceImpl implements StreetService {
 
     @Override
     public List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto) {
+        streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
+                .stream().filter(street -> street.getLocation().getY() == 1.123 && street.getLocation().getY() == 2.213)
+                .map(street -> {
+                    //1.123, 2.213 만 값이 들어와 street
+                    //리뷰 작성
+                    //reviewRepository.리뷰작성()
+
+                })
+
         return streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
                 .stream().map(street -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
+
                     Optional<Integer> reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
                     return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
                 }).collect(Collectors.toList());
