@@ -2,11 +2,16 @@ package com.streetreview.review.dto;
 
 
 import com.streetreview.member.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class ResReviewListDto {
     private String content;
     private int likey;

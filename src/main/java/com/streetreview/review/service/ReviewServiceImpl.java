@@ -51,6 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ResReviewListDto> viewReviewList(ReqStreetPointDto reqStreetPointDto) {
         streetRepository.findByLocation(new GeoJsonPoint(reqStreetPointDto.getY(), reqStreetPointDto.getX()))
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+        System.out.println("@@ : " + reqStreetPointDto.getX());
 
         return reviewRepository.findByXAndYOrderByCreatedDateDesc(reqStreetPointDto.getX(), reqStreetPointDto.getY())
                 .stream().map(review -> {
