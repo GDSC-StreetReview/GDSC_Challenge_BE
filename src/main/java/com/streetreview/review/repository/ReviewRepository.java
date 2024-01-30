@@ -20,7 +20,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByXAndYOrderByCreatedDateDesc(Double x, Double Y);
 
-    @Query("SELECT COUNT(r) FROM Review r WHERE r.x = :xValue AND r.y = :yValue GROUP BY r.x, r.y")
+    @Query("SELECT COALESCE(COUNT(r), 0) FROM Review r WHERE r.x = :xValue AND r.y = :yValue GROUP BY r.x, r.y")
     Integer groupAndCountByXAndY(@Param("xValue") Double xValue, @Param("yValue") Double yValue);
 
 
