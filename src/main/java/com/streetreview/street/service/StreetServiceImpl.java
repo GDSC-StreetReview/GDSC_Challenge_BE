@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +47,8 @@ public class StreetServiceImpl implements StreetService {
                 .stream().map(street -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    int reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
-                    return street.toResStreetListDto(photoUrlList, reviewCount);
+                    Optional<Integer> reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
+                    return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
                 }).collect(Collectors.toList());
     }
 
@@ -57,8 +58,8 @@ public class StreetServiceImpl implements StreetService {
                 .stream().map(street -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    int reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
-                    return street.toResStreetListDto(photoUrlList, reviewCount);
+                    Optional<Integer> reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
+                    return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
                 }).collect(Collectors.toList());
     }
 }
