@@ -21,10 +21,7 @@ public class ReplyController {
     private final ReplyService replyServiceImpl;
     @PostMapping("/write") // 댓글 작성
     public ResponseEntity<Message> writeReply(@RequestBody ReqWriteReplyDto reqWriteReplyDto) {
-        replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember());
-        return ResponseEntity.ok(new Message(StatusCode.OK));
+        return ResponseEntity.ok(new Message(StatusCode.OK, replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember())));
     }
-
-
 
 }

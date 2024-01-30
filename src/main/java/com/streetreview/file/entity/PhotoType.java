@@ -11,9 +11,9 @@ import javax.persistence.EnumType;
 @Getter
 public enum PhotoType {
 
-    STREET("PROFILE", "/PROFILE"),
-    REVIEW("POST", "/POST"),
-    REPLY("NOTICE", "/NOTICE");
+    STREET("STREET", "/STREET"),
+    REVIEW("REVIEW", "/REVIEW"),
+    REPLY("REPLY", "/REPLY");
 
     private String value;
     private String path;

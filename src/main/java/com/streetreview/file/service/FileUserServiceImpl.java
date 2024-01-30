@@ -33,20 +33,14 @@ import java.util.List;
 @Service
 public class FileUserServiceImpl implements FileUserService{
     private final PhotoRepository photoRepository;
-    private final StreetRepository streetRepository;
-    private final ReviewRepository reviewRepository;
-    private final ReplyRepository replyRepository;
 
     private final Path fileLocation;
     public static final String URL_VIEW = "/image?name=";
     public static final String URL_DOWNLOAD = "/downloadFile/";
 
     @Autowired
-    public FileUserServiceImpl(PhotoRepository photoRepository, FileUploadProperties fileUploadProperties, StreetRepository streetRepository, ReviewRepository reviewRepository, ReplyRepository replyRepository) {
+    public FileUserServiceImpl(PhotoRepository photoRepository, FileUploadProperties fileUploadProperties) {
         this.photoRepository = photoRepository;
-        this.streetRepository = streetRepository;
-        this.reviewRepository = reviewRepository;
-        this.replyRepository = replyRepository;
         this.fileLocation = Paths.get(fileUploadProperties.getUploadDir()).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileLocation);

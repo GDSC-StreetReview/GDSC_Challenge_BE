@@ -7,6 +7,7 @@ import com.streetreview.member.repository.MemberRepository;
 import com.streetreview.reply.dto.ReqWriteReplyDto;
 import com.streetreview.reply.entity.Reply;
 import com.streetreview.reply.repository.ReplyRepository;
+import com.streetreview.review.dto.ResReviewIdDto;
 import com.streetreview.review.entity.Review;
 import com.streetreview.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     @Transactional
-    public void writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId) {
+    public ResReviewIdDto writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId) {
         //멤버가 있는지 먼저 확인하기
         Member writer = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomException(StatusCode.FORBIDDEN));
@@ -36,7 +37,7 @@ public class ReplyServiceImpl implements ReplyService {
 
         review.addComment(reply);
         writer.addReply(reply);
-        replyRepository.save(reply);
+        return new ResReviewIdDto(replyRepository.save(reply).getReplyId());
 
         //Review 는 데이터 베이스에 이미 존재
         //reply아직 미존재

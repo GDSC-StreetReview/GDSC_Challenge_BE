@@ -73,13 +73,15 @@ public class Review {
         this.member = member;
     }
 
-    public ResReviewListDto toResReviewListDto(Member member) {
+
+    public ResReviewListDto toResReviewListDto(Member member, List<String> photoList) {
         return ResReviewListDto.builder()
                 .content(content)
                 .likey(likey)
                 .createdDate(createdDate)
                 .updatedDate(updatedDate)
                 .member(member)
+                .photoList(photoList)
                 .build();
     }
 

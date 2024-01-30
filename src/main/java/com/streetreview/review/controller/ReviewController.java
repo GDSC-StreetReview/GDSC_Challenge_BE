@@ -22,8 +22,7 @@ public class ReviewController {
 
     @PostMapping("/write") // 리뷰 작성
     public ResponseEntity<Message> writeReview(@RequestBody ReqWriteReviewDto reqWriteReviewDto) {
-        reviewService.writeReview(reqWriteReviewDto, getStrvMember());
-        return ResponseEntity.ok(new Message(StatusCode.OK));
+        return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.writeReview(reqWriteReviewDto, getStrvMember())));
     }
 
 

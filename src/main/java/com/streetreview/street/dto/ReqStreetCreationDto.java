@@ -5,6 +5,7 @@ import com.streetreview.street.entity.Street;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 @Getter
 @NoArgsConstructor
@@ -26,7 +27,6 @@ public class ReqStreetCreationDto {
         return Street.builder()
                 .streetAddress(streetAddress)
                 .streetName(streetName)
-                .x(x)
-                .y(y).build();
+                .location(new GeoJsonPoint(y, x)).build();
     }
 }
