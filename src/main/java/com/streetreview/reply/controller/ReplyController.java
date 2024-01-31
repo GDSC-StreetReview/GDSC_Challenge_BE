@@ -3,6 +3,7 @@ package com.streetreview.reply.controller;
 
 import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
+import com.streetreview.reply.dto.ReqDeleteReplyDto;
 import com.streetreview.reply.dto.ReqWriteReplyDto;
 import com.streetreview.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,9 @@ public class ReplyController {
     public ResponseEntity<Message> writeReply(@RequestBody ReqWriteReplyDto reqWriteReplyDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember())));
     }
-
+    @DeleteMapping
+    public ResponseEntity<Message> deleteReply(@RequestBody ReqDeleteReplyDto reqDeleteReplyDto) {
+        replyServiceImpl.deleteReply(reqDeleteReplyDto, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
 }

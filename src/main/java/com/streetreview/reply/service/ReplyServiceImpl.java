@@ -4,6 +4,7 @@ import com.streetreview.member.entity.Member;
 import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.repository.MemberRepository;
+import com.streetreview.reply.dto.ReqDeleteReplyDto;
 import com.streetreview.reply.dto.ReqWriteReplyDto;
 import com.streetreview.reply.entity.Reply;
 import com.streetreview.reply.repository.ReplyRepository;
@@ -13,6 +14,8 @@ import com.streetreview.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -42,11 +45,15 @@ public class ReplyServiceImpl implements ReplyService {
         //Review 는 데이터 베이스에 이미 존재
         //reply아직 미존재
         //그러니까 연관관게를 맺어줘야함
-
-
     }
 
+    @Override
+    @Transactional
+    public void deleteReply(ReqDeleteReplyDto reqDeleteReplyDto, Long memberId) {
+        //리뷰가 있는지 먼저 확인하기
 
-
-
+        //댓글을 삭제하려는 사람이 작성자 본인인지 확인하기
+        replyRepository.findByReplyId(reqDeleteReplyDto.getReplyId())
+                .ifPresent(reply -> replyRepository.deleteByReplyIdAndMember_memberId(reply.getReplyId(), memberId));
+    }
 }
