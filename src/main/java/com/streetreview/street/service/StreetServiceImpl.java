@@ -72,4 +72,22 @@ public class StreetServiceImpl implements StreetService {
                     return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
                 }).collect(Collectors.toList());
     }
+
+    @Override
+    public Street test() {
+        Double myX = 37.485219;
+        Double myY = 126.805708;
+        Double targetX = 37.485237;
+        Double targetY = 126.805706;
+
+        Street targetStreet = streetRepository.findNear(myY, myX, maxDistance)
+                .stream().filter(street -> street.isTarget(targetX, targetY)).findFirst()
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_LOCATION));
+
+        //이 targetStreet를 이용해서 작성하면됨,
+        //X좌표 = targetStreet.getLocation().getX();
+        //Y좌표 = targetStreet.getLocation().getY();
+
+        return targetStreet;
+    }
 }

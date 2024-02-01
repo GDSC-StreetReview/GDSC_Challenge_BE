@@ -55,4 +55,8 @@ public class Street {
                 .reviewCount(reviewCount)
                 .likey(likey).build();
     }
+
+    public boolean isTarget(Double targetX, Double targetY) {
+        return location.getX() == targetY && location.getY() == targetX;
+    }
 }

@@ -8,6 +8,7 @@ import com.streetreview.street.dto.ReqStreetListDto;
 import com.streetreview.street.service.StreetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,5 +30,11 @@ public class StreetController {
     @PostMapping("/all/view")
     public ResponseEntity<Message> viewAllStreetPoint() {
         return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getAllStreetList()));
+    }
+
+    @PostMapping("/aa")
+    public ResponseEntity<Message> test() {
+
+        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.test()));
     }
 }
