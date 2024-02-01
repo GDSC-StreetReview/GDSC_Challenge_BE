@@ -28,15 +28,13 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;
     private final MemberRepository memberRepository;
     private final StreetRepository streetRepository;
-    private static final Double maxDistance = 10000.0; //10km
+    private static final Double maxDistance = 5000.0; //10km
 
     @Override
     @Transactional
     public ResReplyIdDto writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId) {
-        streetRepository.findByLocation(new GeoJsonPoint(reqWriteReplyDto.getMyY(), reqWriteReplyDto.getMyY()))
-                //위치에 없으면 에러 발생
+        streetRepository.findNearAndExact(reqWriteReplyDto.getMyY(), reqWriteReplyDto.getMyX(), maxDistance, reqWriteReplyDto.getReviewY(), reqWriteReplyDto.getReviewX())
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_LOCATION));
-
         //위치에 있다면 댓글 작성.
         //멤버가 있는지 먼저 확인하기
         Member writer = memberRepository.findByMemberId(memberId)
