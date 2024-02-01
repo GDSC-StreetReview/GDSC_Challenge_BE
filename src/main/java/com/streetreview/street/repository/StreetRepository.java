@@ -19,4 +19,7 @@ public interface StreetRepository extends MongoRepository<Street, String> {
     List<Street> findNear(double latitude, double longitude, double maxDistance);
 
     List<Street> findAll();
+
+    @Query(value = "{ 'location': { $near: { $geometry: { type: 'Point', coordinates: [?0, ?1] }, $maxDistance: ?2 }, $geoIntersects: { $geometry: { type: 'Point', coordinates: [?3, ?4] } } } }")
+    Optional<Street> findNearAndExact(double userLatitude, double userLongitude, double maxDistance, double specificLatitude, double specificLongitude);
 }

@@ -14,6 +14,10 @@ public class ReqWriteReplyDto {
     private Long reviewId;
     private String replyContent;
     private String replyPhoto;
+    private Double myX;
+    private Double myY;
+    private Double reviewX;
+    private Double reviewY;
 
     @Builder
     public ReqWriteReplyDto(Long reviewId, String replyContent, String replyPhoto) {

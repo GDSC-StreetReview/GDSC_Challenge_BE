@@ -43,14 +43,14 @@ public class StreetServiceImpl implements StreetService {
 
     @Override
     public List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto) {
-        streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
-                .stream().filter(street -> street.getLocation().getY() == 1.123 && street.getLocation().getY() == 2.213)
-                .map(street -> {
-                    //1.123, 2.213 만 값이 들어와 street
-                    //리뷰 작성
-                    //reviewRepository.리뷰작성()
-
-                })
+//        streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
+//                .stream().filter(street -> street.getLocation().getY() == 1.123 && street.getLocation().getX() == 2.213)
+//                .map(street -> {
+//                    //1.123, 2.213 만 값이 들어와 street
+//                    //리뷰 작성
+//                    //reviewRepository.리뷰작성()
+//
+//                })
 
         return streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
                 .stream().map(street -> {
