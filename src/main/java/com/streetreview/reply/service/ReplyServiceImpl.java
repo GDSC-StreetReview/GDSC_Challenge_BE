@@ -12,6 +12,7 @@ import com.streetreview.reply.repository.ReplyRepository;
 import com.streetreview.review.dto.ResReviewIdDto;
 import com.streetreview.review.entity.Review;
 import com.streetreview.review.repository.ReviewRepository;
+import com.streetreview.street.entity.Street;
 import com.streetreview.street.repository.StreetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -33,8 +34,11 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     @Transactional
     public ResReplyIdDto writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId) {
-        streetRepository.findNearAndExact(reqWriteReplyDto.getMyY(), reqWriteReplyDto.getMyX(), maxDistance, reqWriteReplyDto.getReviewY(), reqWriteReplyDto.getReviewX())
+        streetRepository.findNear(reqWriteReplyDto.getMyY(), reqWriteReplyDto.getMyX(), maxDistance)
+                .stream().filter(street -> street.isTarget(reqWriteReplyDto.getReviewX(), reqWriteReplyDto.getReviewY())).findFirst()
+                //위치에 없다면 오류 출력
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_LOCATION));
+
         //위치에 있다면 댓글 작성.
         //멤버가 있는지 먼저 확인하기
         Member writer = memberRepository.findByMemberId(memberId)
