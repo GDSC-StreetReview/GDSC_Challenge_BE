@@ -2,6 +2,7 @@ package com.streetreview.review.controller;
 
 import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
+import com.streetreview.review.dto.ReqModifyReviewDto;
 import com.streetreview.review.dto.ReqStreetPointDto;
 import com.streetreview.review.dto.ReqWriteReviewDto;
 import com.streetreview.review.service.ReviewService;
@@ -39,5 +40,11 @@ public class ReviewController {
     public ResponseEntity<Message> getUserReviews(@PathVariable Long memberId) {
 
         return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
+
+    @PatchMapping("/{reviewId}")
+    public ResponseEntity<Message> modifyReviews(@PathVariable Long reviewId) {
+        reviewService.deleteReview(reviewId,getStrvMember());
+        return  ResponseEntity.ok(new Message(StatusCode.OK));
     }
 }
