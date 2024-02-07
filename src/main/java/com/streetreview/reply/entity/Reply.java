@@ -2,6 +2,7 @@ package com.streetreview.reply.entity;
 
 
 import com.streetreview.member.entity.Member;
+import com.streetreview.reply.dto.ResReplyListDto;
 import com.streetreview.review.entity.Review;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @DynamicUpdate
 @DynamicInsert
@@ -68,5 +70,16 @@ public class Reply {
 
     public void writeBy(Member member) {
         this.member = member;
+    }
+
+    public ResReplyListDto toResReplyListDto(List<String> photoUrlList) {
+        return ResReplyListDto.builder()
+                .replyId(replyId)
+                .replyContent(replyContent)
+                .photoList(photoUrlList)
+                .replyLikey(replyLikey)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
     }
 }

@@ -26,4 +26,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     //select * from Review where x = ? and y = ? order by createdDate desc
 
+    Optional<Review> findByReviewIdAndMember_memberId(Long reviewId, Long memberId);
 }
