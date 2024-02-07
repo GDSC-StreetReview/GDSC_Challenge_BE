@@ -32,6 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final MemberRepository memberRepository;
     private final StreetRepository streetRepository;
     private final PhotoRepository photoRepository;
+    private final String DELETED = "삭제된 리뷰입니다.";
 
     @Override
     @Transactional
@@ -75,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(Long reviewId, Long memberId){
         Review review = reviewRepository.findByReviewIdAndMember_memberId(reviewId,memberId)
                         .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
-        review.setContent("삭제된 리뷰입니다.");
+        review.setContent(DELETED);
 
         reviewRepository.save(review);
     }

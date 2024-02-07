@@ -21,7 +21,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Review {
@@ -94,4 +93,7 @@ public class Review {
         reply.addReview(this);
     }
 
+    public void setContent(String content){
+        this.content = content;
+    }
 }
