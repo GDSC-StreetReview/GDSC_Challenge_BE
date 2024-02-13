@@ -20,7 +20,8 @@ public class GoogleAuth {
     private String clientSecret;
 
     public static final String GOOGLE = "google";
-    public static final String REDIRECT_URI = "http://semtle.catholic.ac.kr:3000";
+    @Value("${google.redirect}")
+    public static String REDIRECT_URI;
 
     public static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
     public static final String MEMBER_INFO_URL = "https://oauth2.googleapis.com/tokeninfo";
