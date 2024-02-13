@@ -15,7 +15,7 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RestController
 @RequiredArgsConstructor
-@Component
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reviews")
 public class ReviewController {
 

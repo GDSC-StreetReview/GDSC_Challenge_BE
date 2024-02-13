@@ -11,6 +11,7 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
