@@ -30,6 +30,7 @@ public class GoogleAuth {
         String decode = URLDecoder.decode(code, StandardCharsets.UTF_8);
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        System.out.println("redirect-uri = " + REDIRECT_URI);
         params.add("code", decode);
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
