@@ -38,13 +38,13 @@ public class ReviewController {
     //1 - 주소?memberId=1 requestParam
     //2 - /reviews/1/2 pathvariable
     @GetMapping("/{memberId}") // 특정 사용자의 리뷰 보여주기
-    public ResponseEntity<Message> getUserReviews(@PathVariable Long memberId) {
+    public ResponseEntity<Message> getUserReviews(@PathVariable(name = "memberId") Long memberId) {
 
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
 
     @PatchMapping("/{reviewId}")
-    public ResponseEntity<Message> modifyReviews(@PathVariable Long reviewId) {
+    public ResponseEntity<Message> modifyReviews(@PathVariable(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId,getStrvMember());
         return  ResponseEntity.ok(new Message(StatusCode.OK));
     }
