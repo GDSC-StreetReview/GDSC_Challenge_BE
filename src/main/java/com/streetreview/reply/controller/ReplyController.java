@@ -33,7 +33,6 @@ public class ReplyController {
         replyServiceImpl.deleteReply(reqDeleteReplyDto, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
-
     @GetMapping("/{reviewId}")
     public ResponseEntity<Message> getReply(@PathVariable(name = "reviewId") Long reviewId) {
         List<ResReplyListDto> replyList = replyServiceImpl.getAllReplyList(reviewId);
