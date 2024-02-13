@@ -7,10 +7,7 @@ import com.streetreview.member.entity.Member;
 import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.repository.MemberRepository;
-import com.streetreview.reply.dto.ReqDeleteReplyDto;
-import com.streetreview.reply.dto.ReqWriteReplyDto;
-import com.streetreview.reply.dto.ResReplyIdDto;
-import com.streetreview.reply.dto.ResReplyListDto;
+import com.streetreview.reply.dto.*;
 import com.streetreview.reply.entity.Reply;
 import com.streetreview.reply.repository.ReplyRepository;
 import com.streetreview.review.dto.ResReviewIdDto;
@@ -84,5 +81,22 @@ public class ReplyServiceImpl implements ReplyService {
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
                     return reply.toResReplyListDto(photoUrlList);
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void reportReply(ReqReportReplyDto reqReportReplyDto, Long memberId) {
+
+        // 댓글 찾아서 reportCount 증가
+        replyRepository.findByReplyId(reqReportReplyDto.getReplyId())
+                .ifPresent(reply -> {
+                    reply.setReportCount(reply.getReportCount() + 1);
+                    replyRepository.save(reply);
+
+                    // 신고 횟수 5회 이상 => 삭제
+                    if (reply.getReportCount() >= 5) {
+                        replyRepository.delete(reply);
+                    }
+                });
     }
 }
