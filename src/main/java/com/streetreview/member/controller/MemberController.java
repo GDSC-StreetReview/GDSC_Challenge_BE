@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RequiredArgsConstructor
@@ -16,8 +18,8 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 public class MemberController {
     private final MemberService memberService;
     @PostMapping("/oauth2/google")
-    public ResponseEntity<Message> OAuthGoogleLogin(@RequestHeader("code") String code) {
-        return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getOauthToken(code)));
+    public ResponseEntity<Message> OAuthGoogleLogin(@RequestBody Map<String, String> request) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, memberService.getOauthToken(request.get("code"))));
     }
 
     @GetMapping("/m/profile")

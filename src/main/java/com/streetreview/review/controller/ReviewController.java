@@ -9,6 +9,7 @@ import com.streetreview.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
