@@ -34,7 +34,7 @@ public class GoogleAuth {
         params.add("code", code);
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
-        params.add("redirect_uri", REDIRECT_URI);
+        //params.add("redirect_uri", REDIRECT_URI);
         params.add("grant_type", "authorization_code");
 
         return restTemplate.postForObject(TOKEN_URL, params, ResGoogleToken.class);
