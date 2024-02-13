@@ -21,7 +21,7 @@ public class GoogleAuth {
 
     public static final String GOOGLE = "google";
     @Value("${google.redirect}")
-    public static String REDIRECT_URI;
+    public String REDIRECT_URI;
 
     public static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
     public static final String MEMBER_INFO_URL = "https://oauth2.googleapis.com/tokeninfo";
