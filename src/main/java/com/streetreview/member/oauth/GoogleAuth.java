@@ -37,7 +37,7 @@ public class GoogleAuth {
         headers.add("Accept", "application/json");
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         System.out.println("redirect-uri = " + REDIRECT_URI);
-        params.add("code", code);
+        params.add("code", decode);
         params.add("client_id", clientId);
         params.add("client_secret", clientSecret);
         params.add("redirect_uri", REDIRECT_URI);
