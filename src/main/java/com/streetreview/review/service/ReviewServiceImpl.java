@@ -34,13 +34,23 @@ public class ReviewServiceImpl implements ReviewService {
     private final PhotoRepository photoRepository;
     private final String DELETED = "삭제된 리뷰입니다.";
 
+    private static final Double maxDistance = 5000.0; //5km
+
     @Override
     @Transactional
     public ResReviewIdDto writeReview(ReqWriteReviewDto reqWriteReviewDto, Long memberId) {
 
+        streetRepository.findNear(reqWriteReviewDto.getMyY(), reqWriteReviewDto.getMyX(), maxDistance)
+                .stream().filter(street -> street.isTarget(reqWriteReviewDto.getReviewX(), reqWriteReviewDto.getReviewY())).findFirst()
+                //위치에 없다면 오류 출력
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_LOCATION));
+        //회원 위치랑 reqWriteReviewDto.getX(), reqWriteReviewDto.getY();
+
         //회원 검색
         Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StatusCode.FORBIDDEN));
+
+        //회원 위치랑 reqWriteReviewDto.getX(), reqWriteReviewDto.getY();
 
         Review review = reqWriteReviewDto.toReviewEntity();
         member.addReview(review);
