@@ -12,4 +12,6 @@ public interface ReviewService {
     ResReviewIdDto writeReview(ReqWriteReviewDto reqWriteReviewDto, Long MemberId);
     List<ResReviewListDto> viewReviewList(ReqStreetPointDto reqStreetPointDto);
     void deleteReview(Long reviewId, Long memberId);
+
+    void reportReview(ReqReportReviewDto reqReportReviewDto, Long memberId);
 }

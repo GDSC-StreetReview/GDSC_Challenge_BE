@@ -3,10 +3,7 @@ package com.streetreview.reply.controller;
 
 import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
-import com.streetreview.reply.dto.ReqDeleteReplyDto;
-import com.streetreview.reply.dto.ReqReplyListDto;
-import com.streetreview.reply.dto.ReqWriteReplyDto;
-import com.streetreview.reply.dto.ResReplyListDto;
+import com.streetreview.reply.dto.*;
 import com.streetreview.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,7 @@ public class ReplyController {
     public ResponseEntity<Message> writeReply(@RequestBody ReqWriteReplyDto reqWriteReplyDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember())));
     }
-    @DeleteMapping
+    @DeleteMapping // 댓글 삭제
     public ResponseEntity<Message> deleteReply(@RequestBody ReqDeleteReplyDto reqDeleteReplyDto) {
         replyServiceImpl.deleteReply(reqDeleteReplyDto, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
@@ -38,4 +35,11 @@ public class ReplyController {
         List<ResReplyListDto> replyList = replyServiceImpl.getAllReplyList(reviewId);
         return ResponseEntity.ok(new Message(StatusCode.OK, replyList));
     }
+
+    @PutMapping("/report") // 댓글 신고
+    public ResponseEntity<Message> reportReply(@RequestBody ReqReportReplyDto reqReportReplyDto) {
+        replyServiceImpl.reportReply(reqReportReplyDto, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
+
 }

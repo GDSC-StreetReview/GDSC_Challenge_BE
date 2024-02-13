@@ -58,6 +58,10 @@ public class Review {
     @JsonManagedReference
     private List<Reply> replyList = new ArrayList<>();
 
+    @Setter
+    @Column(name = "report_count")
+    private int reportCount;
+
     @Builder
     public Review(Long reviewId, String content, String photo, int likey, Timestamp createdDate, Timestamp updatedDate, Double x, Double y, Member member) {
         this.reviewId = reviewId;

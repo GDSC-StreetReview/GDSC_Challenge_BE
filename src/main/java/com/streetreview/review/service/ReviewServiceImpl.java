@@ -91,6 +91,21 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(review);
     }
 
+    @Override
+    @Transactional
+    public void reportReview(ReqReportReviewDto reqReportReviewDto, Long memberId) {
+
+        reviewRepository.findByReviewId(reqReportReviewDto.getReviewId())
+                .ifPresent(review -> {
+                    review.setReportCount(review.getReportCount() + 1);
+                    reviewRepository.save(review);
+
+                    if (review.getReportCount() >= 5) {
+                        reviewRepository.delete(review);
+                    }
+                });
+    }
+
 
 }
 

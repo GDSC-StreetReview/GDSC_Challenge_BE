@@ -53,6 +53,10 @@ public class Reply {
     @JoinColumn(name = "review_id")
     private Review review;
 
+    @Setter
+    @Column(name = "report_count")
+    private int reportCount;
+
 
     @Builder
     public Reply(Long replyId, String replyContent, String replyPhoto, int replyLikey, Timestamp createDate, Timestamp updateDate) {

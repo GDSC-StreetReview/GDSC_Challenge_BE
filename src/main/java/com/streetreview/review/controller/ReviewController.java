@@ -3,6 +3,7 @@ package com.streetreview.review.controller;
 import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
 import com.streetreview.review.dto.ReqModifyReviewDto;
+import com.streetreview.review.dto.ReqReportReviewDto;
 import com.streetreview.review.dto.ReqStreetPointDto;
 import com.streetreview.review.dto.ReqWriteReviewDto;
 import com.streetreview.review.service.ReviewService;
@@ -28,7 +29,6 @@ public class ReviewController {
     }
 
 
-
     @GetMapping("/all")// 전체 리뷰 보여주기
     public ResponseEntity<Message> getAllReviews(@RequestBody ReqStreetPointDto reqStreetPointDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.viewReviewList(reqStreetPointDto)));
@@ -44,6 +44,16 @@ public class ReviewController {
     }
 
     @PatchMapping("/{reviewId}")
+    public ResponseEntity<Message> modifyReviews(@PathVariable Long reviewId) {
+        reviewService.deleteReview(reviewId, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
+
+    @PutMapping("/report")
+    public ResponseEntity<Message> reportReview(@RequestBody ReqReportReviewDto reqReportReviewDto) {
+        reviewService.reportReview(reqReportReviewDto, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+
     public ResponseEntity<Message> modifyReviews(@PathVariable(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId,getStrvMember());
         return  ResponseEntity.ok(new Message(StatusCode.OK));
