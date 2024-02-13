@@ -11,23 +11,30 @@ public class ReqWriteReviewDto {
 
     private String content;
     private String photo;
-    private Double x;
-    private Double y;
+    private Double myX;
+    private Double myY;
+    //길거리 좌표
+    private Double reviewX;
+    private Double reviewY;
 
-    @Builder
-    public ReqWriteReviewDto(String content, String photo, Double x, Double y) {
+    public ReqWriteReviewDto(String content, String photo, Double myX, Double myY, Double reviewX, Double reviewY) {
         this.content = content;
         this.photo = photo;
-        this.x = x;
-        this.y = y;
+        this.myX = myX;
+        this.myY = myY;
+        this.reviewX = reviewX;
+        this.reviewY = reviewY;
     }
+
+    @Builder
+
 
     public Review toReviewEntity() {
         return Review.builder()
                 .content(content)
                 .photo(photo)
-                .x(x)
-                .y(y)
+                .x(reviewX)
+                .y(reviewY)
                 .build();
     }
 }

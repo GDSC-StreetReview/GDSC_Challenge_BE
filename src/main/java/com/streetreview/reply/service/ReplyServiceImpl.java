@@ -33,7 +33,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final MemberRepository memberRepository;
     private final StreetRepository streetRepository;
     private final PhotoRepository photoRepository;
-    private static final Double maxDistance = 5000.0; //10km
+    private static final Double maxDistance = 5000.0; //5km
 
     @Override
     @Transactional

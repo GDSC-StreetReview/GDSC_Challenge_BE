@@ -16,7 +16,7 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RestController
 @RequiredArgsConstructor
-@Component
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reply")
 public class ReplyController {
 
@@ -30,11 +30,10 @@ public class ReplyController {
         replyServiceImpl.deleteReply(reqDeleteReplyDto, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
-
-    @GetMapping
-    public ResponseEntity<List<ResReplyListDto>> getReply(@RequestBody ReqReplyListDto reqReplyListDto) {
-        List<ResReplyListDto> replyList = replyServiceImpl.getAllReplyList(reqReplyListDto.getReviewId());
-        return ResponseEntity.ok(replyList);
+    @GetMapping("/{reviewId}")
+    public ResponseEntity<Message> getReply(@PathVariable(name = "reviewId") Long reviewId) {
+        List<ResReplyListDto> replyList = replyServiceImpl.getAllReplyList(reviewId);
+        return ResponseEntity.ok(new Message(StatusCode.OK, replyList));
     }
 
     @PutMapping("/report") // 댓글 신고

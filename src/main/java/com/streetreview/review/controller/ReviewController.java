@@ -10,13 +10,14 @@ import com.streetreview.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RestController
 @RequiredArgsConstructor
-@Component
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reviews")
 public class ReviewController {
 
@@ -37,7 +38,7 @@ public class ReviewController {
     //1 - 주소?memberId=1 requestParam
     //2 - /reviews/1/2 pathvariable
     @GetMapping("/{memberId}") // 특정 사용자의 리뷰 보여주기
-    public ResponseEntity<Message> getUserReviews(@PathVariable Long memberId) {
+    public ResponseEntity<Message> getUserReviews(@PathVariable(name = "memberId") Long memberId) {
 
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
@@ -52,5 +53,9 @@ public class ReviewController {
     public ResponseEntity<Message> reportReview(@RequestBody ReqReportReviewDto reqReportReviewDto) {
         reviewService.reportReview(reqReportReviewDto, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
+
+    public ResponseEntity<Message> modifyReviews(@PathVariable(name = "reviewId") Long reviewId) {
+        reviewService.deleteReview(reviewId,getStrvMember());
+        return  ResponseEntity.ok(new Message(StatusCode.OK));
     }
 }
