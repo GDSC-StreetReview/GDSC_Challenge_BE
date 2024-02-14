@@ -90,7 +90,7 @@ public class ReplyServiceImpl implements ReplyService {
         // 댓글 찾아서 reportCount 증가
         replyRepository.findByReplyId(reqReportReplyDto.getReplyId())
                 .ifPresent(reply -> {
-                    reply.setReportCount(reply.getReportCount() + 1);
+                    reply.increaseReplyCount(1);
                     replyRepository.save(reply);
 
                     // 신고 횟수 5회 이상 => 삭제
