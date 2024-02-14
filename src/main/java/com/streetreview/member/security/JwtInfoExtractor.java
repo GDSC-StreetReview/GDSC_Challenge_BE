@@ -32,4 +32,15 @@ public class JwtInfoExtractor {
 
         return null;
     }
+
+    public static String getStrvRole() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof JwtAuthenticationToken) {
+            Claims claims = ((JwtAuthenticationToken) authentication).getClaims();
+            claims.get(ClaimName.ROLE.getValue());
+            return claims.get(ClaimName.ROLE.getValue()).toString();
+        }
+
+        return null;
+    }
 }

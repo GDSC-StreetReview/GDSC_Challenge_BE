@@ -15,7 +15,7 @@ public interface StreetRepository extends MongoRepository<Street, String> {
     Optional<Street> findByLocation(GeoJsonPoint location);
     Optional<Street> findById(String streetId);
 
-    @Query(value = "{ 'location': { $near: { $geometry: { type: 'Point', coordinates: [?0, ?1] }, $maxDistance: ?2 } } }")
+    @Query(value = "{ 'location': { $near: { $geometry: { type: 'Point', coordinates: [?0, ?1] }, $maxDistance: ?2 } } }", sort = "{'location': 1}")
     List<Street> findNear(double latitude, double longitude, double maxDistance);
 
     List<Street> findAll();

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StreetService {
 
-    ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto);
+    ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto, String role);
 
     List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto);
     List<ResStreetListDto> getAllStreetList();

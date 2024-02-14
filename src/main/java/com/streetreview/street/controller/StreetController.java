@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
+import static com.streetreview.member.security.JwtInfoExtractor.getStrvRole;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -20,7 +23,7 @@ public class StreetController {
 
     @PostMapping("/registration")
     public ResponseEntity<Message> createStreetPoint(@RequestBody ReqStreetCreationDto reqStreetCreationDto) {
-        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.createStreet(reqStreetCreationDto)));
+        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.createStreet(reqStreetCreationDto, getStrvRole())));
     }
 
     @PostMapping("/near/view")

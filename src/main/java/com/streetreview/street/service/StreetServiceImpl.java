@@ -4,8 +4,10 @@ package com.streetreview.street.service;
 import com.streetreview.file.entity.Photo;
 import com.streetreview.file.entity.PhotoType;
 import com.streetreview.file.repository.PhotoRepository;
+import com.streetreview.member.dto.Role;
 import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
+import com.streetreview.member.repository.MemberRepository;
 import com.streetreview.review.repository.ReviewRepository;
 import com.streetreview.street.dto.ReqStreetCreationDto;
 import com.streetreview.street.dto.ReqStreetIdDto;
@@ -29,11 +31,15 @@ public class StreetServiceImpl implements StreetService {
     private final StreetRepository streetRepository;
     private final PhotoRepository photoRepository;
     private final ReviewRepository reviewRepository;
-    private static final Double maxDistance = 10000.0; //10km
+
+    private static final Double maxDistance = 5000.0; //10km
 
     @Override
     @Transactional
-    public ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto) {
+    public ReqStreetIdDto createStreet(ReqStreetCreationDto reqStreetCreationDto, String role) {
+        if(!role.equals("MANAGER")) {
+            throw new CustomException(StatusCode.FORBIDDEN);
+        }
         //좌표가 이미 있으면 Exception 던짐
         streetRepository.findByLocation(new GeoJsonPoint(reqStreetCreationDto.getY(), reqStreetCreationDto.getX()))
                 .ifPresent(street -> {throw new CustomException(StatusCode.ALREADY_EXIST);});
@@ -43,15 +49,6 @@ public class StreetServiceImpl implements StreetService {
 
     @Override
     public List<ResStreetListDto> getNearStreetList(ReqStreetListDto reqStreetListDto) {
-//        streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
-//                .stream().filter(street -> street.getLocation().getY() == 1.123 && street.getLocation().getX() == 2.213)
-//                .map(street -> {
-//                    //1.123, 2.213 만 값이 들어와 street
-//                    //리뷰 작성
-//                    //reviewRepository.리뷰작성()
-//
-//                })
-
         return streetRepository.findNear(reqStreetListDto.getMyY(), reqStreetListDto.getMyX(), maxDistance)
                 .stream().map(street -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
