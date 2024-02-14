@@ -76,6 +76,10 @@ public class Reply {
         this.member = member;
     }
 
+    public void increaseReplyCount(int count) {
+        this.reportCount += count;
+    }
+
     public ResReplyListDto toResReplyListDto(List<String> photoUrlList) {
         return ResReplyListDto.builder()
                 .replyId(replyId)
