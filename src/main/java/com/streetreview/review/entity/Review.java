@@ -58,7 +58,6 @@ public class Review {
     @JsonManagedReference
     private List<Reply> replyList = new ArrayList<>();
 
-    @Setter
     @Column(name = "report_count")
     private int reportCount;
 
@@ -99,5 +98,9 @@ public class Review {
 
     public void setContent(String content){
         this.content = content;
+    }
+
+    public void increaseReportCount(int count) {
+        this.reportCount += count;
     }
 }

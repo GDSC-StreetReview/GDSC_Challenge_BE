@@ -97,7 +97,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         reviewRepository.findByReviewId(reqReportReviewDto.getReviewId())
                 .ifPresent(review -> {
-                    review.setReportCount(review.getReportCount() + 1);
+                    review.increaseReportCount(1);
                     reviewRepository.save(review);
 
                     if (review.getReportCount() >= 5) {
