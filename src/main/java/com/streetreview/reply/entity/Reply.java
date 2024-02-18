@@ -1,6 +1,7 @@
 package com.streetreview.reply.entity;
 
 
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.entity.Member;
 import com.streetreview.reply.dto.ResReplyListDto;
 import com.streetreview.review.entity.Review;
@@ -55,7 +56,7 @@ public class Reply {
 
     @Setter
     @Column(name = "report_count")
-    private int reportCount;
+    private int reportCount = 0;
 
 
     @Builder
@@ -80,12 +81,13 @@ public class Reply {
         this.reportCount += count;
     }
 
-    public ResReplyListDto toResReplyListDto(List<String> photoUrlList) {
+    public ResReplyListDto toResReplyListDto(MemberProfileDto member, List<String> photoUrlList) {
         return ResReplyListDto.builder()
                 .replyId(replyId)
                 .replyContent(replyContent)
                 .photoList(photoUrlList)
                 .replyLikey(replyLikey)
+                .member(member)
                 .createDate(createDate)
                 .updateDate(updateDate)
                 .build();

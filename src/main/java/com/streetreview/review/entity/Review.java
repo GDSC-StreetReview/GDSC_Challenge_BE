@@ -59,7 +59,7 @@ public class Review {
     private List<Reply> replyList = new ArrayList<>();
 
     @Column(name = "report_count")
-    private int reportCount;
+    private int reportCount = 0;
 
     @Builder
     public Review(Long reviewId, String content, String photo, int likey, Timestamp createdDate, Timestamp updatedDate, Double x, Double y, Member member) {

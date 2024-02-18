@@ -5,6 +5,7 @@ import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
 import com.streetreview.street.dto.ReqStreetCreationDto;
 import com.streetreview.street.dto.ReqStreetListDto;
+import com.streetreview.street.dto.ReqStreetViewDto;
 import com.streetreview.street.service.StreetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class StreetController {
     @PostMapping("/all/view")
     public ResponseEntity<Message> viewAllStreetPoint() {
         return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getAllStreetList()));
+    }
+
+    @PostMapping("/view")
+    public ResponseEntity<Message> viewStreetPoint(@RequestBody ReqStreetViewDto reqStreetViewDto) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, streetService.getStreet(reqStreetViewDto)));
+
     }
 
     @PostMapping("/aa")

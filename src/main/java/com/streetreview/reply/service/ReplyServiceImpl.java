@@ -79,7 +79,7 @@ public class ReplyServiceImpl implements ReplyService {
                 .stream().map(reply -> {
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(reply.getReplyId()), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    return reply.toResReplyListDto(photoUrlList);
+                    return reply.toResReplyListDto(reply.getMember().toMemberProfileDto(), photoUrlList);
                 }).collect(Collectors.toList());
     }
 

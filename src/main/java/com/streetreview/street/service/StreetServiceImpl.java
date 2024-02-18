@@ -9,10 +9,7 @@ import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.repository.MemberRepository;
 import com.streetreview.review.repository.ReviewRepository;
-import com.streetreview.street.dto.ReqStreetCreationDto;
-import com.streetreview.street.dto.ReqStreetIdDto;
-import com.streetreview.street.dto.ReqStreetListDto;
-import com.streetreview.street.dto.ResStreetListDto;
+import com.streetreview.street.dto.*;
 import com.streetreview.street.entity.Street;
 import com.streetreview.street.repository.StreetRepository;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +65,19 @@ public class StreetServiceImpl implements StreetService {
                     Optional<Integer> reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
                     return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public ResStreetListDto getStreet(ReqStreetViewDto reqStreetViewDto) {
+        Street street = streetRepository.findByLocation(new GeoJsonPoint(reqStreetViewDto.getY(), reqStreetViewDto.getX()))
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+
+        List<String> photoUrlList = photoRepository.findByTargetIdAndType(street.getId(), PhotoType.STREET.getValue())
+                .stream().map(Photo::getFileUrl).collect(Collectors.toList());
+
+        Optional<Integer> reviewCount = reviewRepository.groupAndCountByXAndY(street.getLocation().getY(), street.getLocation().getX());
+
+        return street.toResStreetListDto(photoUrlList, reviewCount.orElse(0));
     }
 
     @Override
