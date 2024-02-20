@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public ResReviewIdDto writeReview(ReqWriteReviewDto reqWriteReviewDto, Long memberId) {
 
-        streetRepository.findNear(reqWriteReviewDto.getMyY(), reqWriteReviewDto.getMyX(), maxDistance)
+        streetRepository.findNear(reqWriteReviewDto.getReviewY(), reqWriteReviewDto.getReviewX(), maxDistance)
                 .stream().filter(street -> street.isTarget(reqWriteReviewDto.getReviewX(), reqWriteReviewDto.getReviewY())).findFirst()
                 //위치에 없다면 오류 출력
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_LOCATION));
