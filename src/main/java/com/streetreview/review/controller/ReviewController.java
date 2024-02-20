@@ -26,7 +26,7 @@ public class ReviewController {
     }
 
 
-    @GetMapping("/all")// 전체 리뷰 보여주기
+    @PostMapping("/all")// 전체 리뷰 보여주기
     public ResponseEntity<Message> getAllReviews(@RequestBody ReqStreetPointDto reqStreetPointDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.viewReviewList(reqStreetPointDto)));
     }
