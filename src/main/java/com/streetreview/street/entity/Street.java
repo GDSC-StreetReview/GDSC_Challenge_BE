@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Street {
     private String id;
     private String streetAddress;
     private String streetName;
+    @GeoSpatialIndexed(name = "location_index")
     private GeoJsonPoint location;
     private int likey = 0;
     @OneToMany
