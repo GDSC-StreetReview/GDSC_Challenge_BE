@@ -42,7 +42,7 @@ public class CustomExceptionHandler {
     private String makeMessage(Exception e) {
         StringBuffer sb = new StringBuffer();
         sb.append("*핸들링 안된 에러 발생*: _<!channel> ");
-        sb.append("\n\n```\n reason : " + e.getClass() + "\n``` \n");
+        sb.append("\n\n```\n reason : " + e.getMessage() + "\n``` \n");
         sb.append("*해당 Exception을 처리 해주세요* ");
 
         return sb.toString();
