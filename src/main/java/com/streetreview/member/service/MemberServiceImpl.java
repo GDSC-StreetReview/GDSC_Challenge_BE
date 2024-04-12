@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService{
             return token.orElseGet(() -> signup(googleAuthDto));
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CustomException(StatusCode.INVALID_DATA_FORMAT);
+            throw new CustomException(StatusCode.INVALID_TOKEN);
         }
     }
 
