@@ -23,13 +23,11 @@ public class CustomExceptionHandler {
         return ErrorResponseEntity.toResponseEntity(e.getAuthCode());
     }
 
-//    @ExceptionHandler(Exception.class)
-//    protected void handleException(Exception e) {
-//        //slackMessage.sendNotification(makeMessage(e));
-//        // 여기서는 일반적인 에러 응답을 반환하거나, 적절히 커스터마이즈 할 수 있습니다.
-//        slackMessage.sendNotification(makeMessage(e));
-//        e.printStackTrace();
-//    }
+    @ExceptionHandler(Exception.class)
+    protected void handleException(Exception e) {
+        slackMessage.sendNotification(makeMessage(e));
+        e.printStackTrace();
+    }
 
     private String makeMessage(CustomException e) {
         StringBuffer sb = new StringBuffer();
