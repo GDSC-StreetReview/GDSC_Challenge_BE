@@ -27,6 +27,7 @@ public class CustomExceptionHandler {
     protected void handleException(Exception e) {
         slackMessage.sendNotification(makeMessage(e));
         e.printStackTrace();
+        throw new RuntimeException(e);
     }
 
     private String makeMessage(CustomException e) {
