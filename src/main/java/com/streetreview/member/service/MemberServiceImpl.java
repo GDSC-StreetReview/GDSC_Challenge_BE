@@ -13,6 +13,7 @@ import com.streetreview.member.security.JwtCreator;
 import com.streetreview.member.security.dto.AccountStatus;
 import com.streetreview.member.security.dto.Token;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,13 +31,18 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public Token getOauthToken(String code) {
-        ResGoogleToken resGoogleToken = googleAuth.getGoogleOauthToken(code);
+        try {
+            ResGoogleToken resGoogleToken = googleAuth.getGoogleOauthToken(code);
 
-        GoogleAuthDto googleAuthDto = googleAuth.getGoogleOauthTokenInfo(resGoogleToken.getId_token());
+            GoogleAuthDto googleAuthDto = googleAuth.getGoogleOauthTokenInfo(resGoogleToken.getId_token());
 
-        Optional<Token> token = memberRepository.findByEmail(googleAuthDto.getEmail()).map(member -> verifyOauthAccount(member.getEmail()));
+            Optional<Token> token = memberRepository.findByEmail(googleAuthDto.getEmail()).map(member -> verifyOauthAccount(member.getEmail()));
 
-        return token.orElseGet(() -> signup(googleAuthDto));
+            return token.orElseGet(() -> signup(googleAuthDto));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(StatusCode.INVALID_DATA_FORMAT);
+        }
     }
 
     @Override
