@@ -27,8 +27,6 @@ public class ReqWriteReviewDto {
     }
 
     @Builder
-
-
     public Review toReviewEntity() {
         return Review.builder()
                 .content(content)

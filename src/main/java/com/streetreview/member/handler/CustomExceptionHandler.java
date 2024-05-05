@@ -30,6 +30,7 @@ public class CustomExceptionHandler {
         throw new RuntimeException(e);
     }
 
+
     private String makeMessage(CustomException e) {
         StringBuffer sb = new StringBuffer();
         sb.append("*에러 발생*: _<!channel> ");
