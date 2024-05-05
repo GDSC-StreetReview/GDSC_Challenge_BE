@@ -1,5 +1,6 @@
 package com.streetreview.member.dto;
 
+import com.streetreview.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,15 @@ public class MemberProfileDto {
         this.email = email;
         this.nickName = nickName;
         this.picture = picture;
+    }
+
+    public static MemberProfileDto memberProfileDto(Member member) {
+        return MemberProfileDto.builder()
+                .memberId(member.getMemberId())
+                .providerId(member.getProviderId())
+                .email(member.getEmail())
+                .nickName(member.getNickName())
+                .picture(member.getPicture())
+                .build();
     }
 }
