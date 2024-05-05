@@ -1,8 +1,8 @@
 FROM openjdk:11-jre-slim
 
 # SSL 인증서를 복사
-COPY domain.pem /usr/local/share/ca-certificates/domain.crt
-
+COPY domain.crt /usr/local/share/ca-certificates/
+COPY domain.key /usr/local/share/ca-certificates/
 # SSL 인증서를 시스템에 등록
 RUN update-ca-certificates
 
