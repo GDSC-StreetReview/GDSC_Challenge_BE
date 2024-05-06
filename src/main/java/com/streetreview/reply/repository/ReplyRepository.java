@@ -11,4 +11,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     void deleteByReplyIdAndMember_memberId(Long replyId, Long memberId);
     Optional<Reply> findByReplyId(Long replyId);
     List<Reply> findByReview_ReviewId(Long review);
+
+    List<Reply> findByMember_memberId(Long memberId);
 }

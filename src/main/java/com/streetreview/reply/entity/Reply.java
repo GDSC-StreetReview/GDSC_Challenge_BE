@@ -92,4 +92,14 @@ public class Reply {
                 .updateDate(updateDate)
                 .build();
     }
+
+    public ResReplyListDto toResReplyListDto() {
+        return ResReplyListDto.builder()
+                .replyId(replyId)
+                .replyContent(replyContent)
+                .replyLikey(replyLikey)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
+    }
 }

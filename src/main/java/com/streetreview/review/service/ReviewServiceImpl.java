@@ -32,7 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final MemberRepository memberRepository;
     private final StreetRepository streetRepository;
     private final PhotoRepository photoRepository;
-    private final String DELETED = "삭제된 리뷰입니다.";
+    public static final String DELETED = "삭제된 리뷰입니다.";
 
     private static final Double maxDistance = 5000.0; //5km
 
