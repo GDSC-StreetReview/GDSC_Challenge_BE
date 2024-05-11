@@ -26,7 +26,6 @@ public class MemberProfileDto {
     public static MemberProfileDto memberProfileDto(Member member) {
         return MemberProfileDto.builder()
                 .memberId(member.getMemberId())
-                .providerId(member.getProviderId())
                 .email(member.getEmail())
                 .nickName(member.getNickName())
                 .picture(member.getPicture())
