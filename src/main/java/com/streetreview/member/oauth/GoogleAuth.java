@@ -29,7 +29,7 @@ public class GoogleAuth {
     public static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
     public static final String MEMBER_INFO_URL = "https://oauth2.googleapis.com/tokeninfo";
 
-    public ResGoogleToken getGoogleOauthToken(String code) {
+    public ResGoogleToken getGoogleOauthToken(String code) throws Exception{
         String decode = URLDecoder.decode(code, StandardCharsets.UTF_8);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -47,7 +47,7 @@ public class GoogleAuth {
         return restTemplate.postForObject(TOKEN_URL, request, ResGoogleToken.class);
     }
 
-    public GoogleAuthDto getGoogleOauthTokenInfo(String id_token) {
+    public GoogleAuthDto getGoogleOauthTokenInfo(String id_token) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> token = Map.of("id_token", id_token);
         GoogleAuthDto googleAuthDto = restTemplate.postForEntity(MEMBER_INFO_URL, token, GoogleAuthDto.class).getBody();

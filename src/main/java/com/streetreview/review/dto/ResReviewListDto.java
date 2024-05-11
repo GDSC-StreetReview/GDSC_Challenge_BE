@@ -22,6 +22,7 @@ public class ResReviewListDto {
     private List<String> photoList;
 
 
+
     @Builder
     public ResReviewListDto(String content, int likey, Timestamp createdDate, Timestamp updatedDate, MemberProfileDto member, List<String> photoList) {
         this.content = content;

@@ -30,6 +30,8 @@ public class JwtValidator {
             request.setAttribute("exception", "UnsupportedJwtException");
         } catch (IllegalArgumentException e) {
             request.setAttribute("exception", "IllegalArgumentException");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

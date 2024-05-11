@@ -103,4 +103,15 @@ public class Review {
     public void increaseReportCount(int count) {
         this.reportCount += count;
     }
+
+    public ResReviewListDto toResReviewListDto() {
+        return ResReviewListDto.builder()
+                .content(content)
+                .likey(likey)
+                .createdDate(createdDate)
+                .updatedDate(updatedDate)
+                .build();
+    }
+
+
 }
