@@ -34,8 +34,6 @@ public class MyPageServiceImpl implements MyPageService {
         return reviews.stream()
                 .filter(review -> !review.getContent().equals(ReviewServiceImpl.DELETED))
                 .map(Review::toResReviewListDto).collect(Collectors.toList());
-
-        //return reviews.stream().map(Review::toResReviewListDto).collect(Collectors.toList());
     }
 
     @Override
