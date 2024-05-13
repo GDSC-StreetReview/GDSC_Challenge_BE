@@ -82,6 +82,7 @@ public class Review {
 
     public ResReviewListDto toResReviewListDto(MemberProfileDto member, List<String> photoList) {
         return ResReviewListDto.builder()
+                .reviewId(reviewId)
                 .content(content)
                 .likey(likey)
                 .createdDate(createdDate)

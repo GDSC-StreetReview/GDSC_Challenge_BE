@@ -51,4 +51,10 @@ public class ReviewController {
         reviewService.reportReview(reqReportReviewDto, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
+
+    @PostMapping("{reviewId}/like")
+    public ResponseEntity<Message> likeReview(@PathVariable String reviewId) {
+        reviewService.likeReview(reviewId, getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ResReviewListDto {
+    private Long reviewId;
     private String content;
     private int likey;
     private Timestamp createdDate;
@@ -24,17 +25,13 @@ public class ResReviewListDto {
 
 
     @Builder
-    public ResReviewListDto(String content, int likey, Timestamp createdDate, Timestamp updatedDate, MemberProfileDto member, List<String> photoList) {
+    public ResReviewListDto(String content, int likey, Timestamp createdDate, Timestamp updatedDate, MemberProfileDto member, List<String> photoList, Long reviewId) {
         this.content = content;
         this.likey = likey;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.member = member;
         this.photoList = photoList;
+        this.reviewId = reviewId;
     }
-
-
-
-
-
 }
