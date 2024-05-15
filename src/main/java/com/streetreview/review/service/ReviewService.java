@@ -14,4 +14,6 @@ public interface ReviewService {
     void deleteReview(Long reviewId, Long memberId);
 
     void reportReview(ReqReportReviewDto reqReportReviewDto, Long memberId);
+
+    void likeReview(String reviewId, Long memberId);
 }
