@@ -103,26 +103,22 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void likeReview(String reviewId, Long memberId) {
-        Optional<Review> reviews = reviewRepository.findByReviewId(Long.valueOf(reviewId));
-        Optional<Member> members = memberRepository.findByMemberId(memberId);
+        // 리뷰 ID와 회원 ID를 사용하여 리뷰와 회원을 조회
+        Review review = reviewRepository.findByReviewId(Long.valueOf(reviewId))
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
-        if (reviews.isPresent() && members.isPresent()) {
-            Review review = reviews.get();
-            Member member = members.get();
-
-            if (reviewLikeRepository.existsByReviewAndMember(review, member)) {
-                throw new CustomException(StatusCode.ALREADY_LIKED);
-            }
-
-            review.increaseLikey();
-            reviewRepository.save(review);
-
-            ReviewLike reviewLike = ReviewLike.createReviewLike(review, member, true);
-            reviewLikeRepository.save(reviewLike);
-
-        } else {
-            throw new CustomException(StatusCode.NOT_FOUND);
+        // 좋아요 눌렀는지 확인
+        if (reviewLikeRepository.existsByReviewAndMember(review, member)) {
+            throw new CustomException(StatusCode.ALREADY_LIKED);
         }
 
+        // 좋아요 추가하고 저장
+        review.increaseLikey();
+        reviewRepository.save(review);
+
+        ReviewLike reviewLike = ReviewLike.createReviewLike(review, member, true);
+        reviewLikeRepository.save(reviewLike);
     }
 }
