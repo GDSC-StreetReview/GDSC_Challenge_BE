@@ -14,6 +14,7 @@ import com.streetreview.review.entity.Review;
 import com.streetreview.review.repository.ReviewRepository;
 import com.streetreview.street.repository.StreetRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -106,6 +107,18 @@ public class ReviewServiceImpl implements ReviewService {
                 });
     }
 
+    @Override
+    public List<ResReviewListDto> viewPagingReviewList(ReqStreetPointDto reqStreetPointDto, Pageable pageable) {
+        streetRepository.findByLocation(new GeoJsonPoint(reqStreetPointDto.getY(), reqStreetPointDto.getX()))
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+
+        return reviewRepository.findAllByXAndYOrderByCreatedDateDesc(reqStreetPointDto.getX(), reqStreetPointDto.getY(), pageable)
+                .stream().map(review -> {
+                    List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(review.getReviewId()), PhotoType.REVIEW.getValue())
+                            .stream().map(Photo::getFileUrl).collect(Collectors.toList());
+                    return review.toResReviewListDto(review.getMember().toMemberProfileDto(), photoUrlList);
+                }).collect(Collectors.toList());
+    }
 
 }
 
