@@ -7,6 +7,8 @@ import com.streetreview.review.dto.ReqStreetPointDto;
 import com.streetreview.review.dto.ReqWriteReviewDto;
 import com.streetreview.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +57,10 @@ public class ReviewController {
     public ResponseEntity<Message> likeReview(@PathVariable String reviewId) {
         reviewService.likeReview(reviewId, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
+    }
+
+    @GetMapping("/paging")
+    public ResponseEntity<Message> getPagingReviews(@PageableDefault(page = 0, size = 10) Pageable pageable, @RequestBody ReqStreetPointDto reqStreetPointDto) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.viewPagingReviewList(reqStreetPointDto, pageable)));
     }
 }
