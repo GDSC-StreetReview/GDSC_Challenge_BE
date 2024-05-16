@@ -89,6 +89,8 @@ public class Review {
                 .updatedDate(updatedDate)
                 .member(member)
                 .photoList(photoList)
+                .reviewX(x)
+                .reviewY(y)
                 .build();
     }
 
