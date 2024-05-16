@@ -17,7 +17,6 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 @CrossOrigin(origins = {"http://localhost:3000", "http://semtle.catholic.ac.kr:3000"})
 @RequestMapping("/reviews")
 public class ReviewController {
-
     private final ReviewService reviewService;
 
     @PostMapping("/write") // 리뷰 작성
