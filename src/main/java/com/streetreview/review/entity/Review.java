@@ -29,6 +29,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
+    @Setter
     @Column(columnDefinition = "text")
     private String content;
 
@@ -81,6 +82,7 @@ public class Review {
 
     public ResReviewListDto toResReviewListDto(MemberProfileDto member, List<String> photoList) {
         return ResReviewListDto.builder()
+                .reviewId(reviewId)
                 .content(content)
                 .likey(likey)
                 .createdDate(createdDate)
@@ -96,10 +98,6 @@ public class Review {
         reply.addReview(this);
     }
 
-    public void setContent(String content){
-        this.content = content;
-    }
-
     public void increaseReportCount(int count) {
         this.reportCount += count;
     }
@@ -113,5 +111,7 @@ public class Review {
                 .build();
     }
 
-
+    public void increaseLikey() {
+        this.likey++;
+    }
 }

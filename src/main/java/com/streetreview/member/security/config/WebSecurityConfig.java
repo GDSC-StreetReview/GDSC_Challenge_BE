@@ -57,6 +57,7 @@ public class WebSecurityConfig {
                 .antMatchers("/reviews/**").authenticated()
                 .antMatchers("/reply/**").authenticated()
                 .antMatchers("/street/**").authenticated()
+                .antMatchers("/mypage/**").authenticated()
                 .antMatchers("/member/**").permitAll()
                 .and()
                 .cors()

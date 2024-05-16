@@ -11,10 +11,12 @@ import com.streetreview.member.handler.StatusCode;
 import com.streetreview.member.repository.MemberRepository;
 import com.streetreview.review.dto.*;
 import com.streetreview.review.entity.Review;
+import com.streetreview.review.entity.ReviewLike;
+import com.streetreview.review.repository.ReviewLikeRepository;
 import com.streetreview.review.repository.ReviewRepository;
+import com.streetreview.street.entity.Street;
 import com.streetreview.street.repository.StreetRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -36,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
     public static final String DELETED = "삭제된 리뷰입니다.";
 
     private static final Double maxDistance = 5000.0; //5km
+    private final ReviewLikeRepository reviewLikeRepository;
 
     @Override
     @Transactional
@@ -70,16 +74,6 @@ public class ReviewServiceImpl implements ReviewService {
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
                     return review.toResReviewListDto(review.getMember().toMemberProfileDto(), photoUrlList);
                 }).collect(Collectors.toList());
-
-        /*
-            List<ResReviewListDto> reviewListDtoList = new ArrayList<>();
-            for(int i = 0; i < reviewList.size(); i++) {
-                Review review = reviewList.get(i);
-                Member member = review.getMember();
-                reviewListDtoList.add(review.toResReviewListDto(member));
-            }
-         */
-
     }
 
     @Override
@@ -108,18 +102,23 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ResReviewListDto> viewPagingReviewList(ReqStreetPointDto reqStreetPointDto, Pageable pageable) {
-        streetRepository.findByLocation(new GeoJsonPoint(reqStreetPointDto.getY(), reqStreetPointDto.getX()))
+    public void likeReview(String reviewId, Long memberId) {
+        // 리뷰 ID와 회원 ID를 사용하여 리뷰와 회원을 조회
+        Review review = reviewRepository.findByReviewId(Long.valueOf(reviewId))
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
-        return reviewRepository.findAllByXAndYOrderByCreatedDateDesc(reqStreetPointDto.getX(), reqStreetPointDto.getY(), pageable)
-                .stream().map(review -> {
-                    List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(review.getReviewId()), PhotoType.REVIEW.getValue())
-                            .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    return review.toResReviewListDto(review.getMember().toMemberProfileDto(), photoUrlList);
-                }).collect(Collectors.toList());
+        // 좋아요 눌렀는지 확인
+        if (reviewLikeRepository.existsByReviewAndMember(review, member)) {
+            throw new CustomException(StatusCode.ALREADY_LIKED);
+        }
+
+        // 좋아요 추가하고 저장
+        review.increaseLikey();
+        reviewRepository.save(review);
+
+        ReviewLike reviewLike = ReviewLike.createReviewLike(review, member, true);
+        reviewLikeRepository.save(reviewLike);
     }
-
 }
-
-
