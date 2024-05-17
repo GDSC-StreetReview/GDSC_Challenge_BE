@@ -1,7 +1,9 @@
 package com.streetreview.review.repository;
 
 import com.streetreview.member.entity.Member;
+import com.streetreview.review.dto.ResReviewListDto;
 import com.streetreview.review.entity.Review;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +29,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     //select * from Review where x = ? and y = ? order by createdDate desc
 
     Optional<Review> findByReviewIdAndMember_memberId(Long reviewId, Long memberId);
+
+    List<Review> findAllByXAndYOrderByCreatedDateDesc(Double x, Double y, Pageable pageable);
 }

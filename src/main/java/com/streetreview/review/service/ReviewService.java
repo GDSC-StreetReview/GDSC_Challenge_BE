@@ -2,6 +2,7 @@ package com.streetreview.review.service;
 
 import com.streetreview.common.dto.Message;
 import com.streetreview.review.dto.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface ReviewService {
     void reportReview(ReqReportReviewDto reqReportReviewDto, Long memberId);
 
     void likeReview(String reviewId, Long memberId);
+
+    List<ResReviewListDto> viewPagingReviewList(ReqStreetPointDto reqStreetPointDto, Pageable pageable);
 }
