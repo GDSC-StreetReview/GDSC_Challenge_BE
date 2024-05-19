@@ -23,6 +23,7 @@ public class ResReplyListDto {
     public ResReplyListDto(Long replyId, String replyContent, List<String> photoList, int replyLikey, MemberProfileDto member, Timestamp createDate, Timestamp updateDate) {
         this.replyId = replyId;
         this.replyContent = replyContent;
+        this.member = member;
         this.photoList = photoList;
         this.replyLikey = replyLikey;
         this.createDate = createDate;

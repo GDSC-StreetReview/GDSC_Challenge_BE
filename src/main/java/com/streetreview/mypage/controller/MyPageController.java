@@ -17,32 +17,39 @@ import java.util.List;
 
 import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
-    @RestController
-    @RequiredArgsConstructor
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping("/mypage")
-    public class MyPageController {
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/mypage")
+public class MyPageController {
 
-        private final MyPageService myPageService;
+    private final MyPageService myPageService;
 
-        @GetMapping("/review")
-        public ResponseEntity<Message> getMyReviews() {
-            List<ResReviewListDto> myReviews = myPageService.getMyReview(getStrvMember());
+    @GetMapping("/review")
+    public ResponseEntity<Message> getMyReviews() {
+        List<ResReviewListDto> myReviews = myPageService.getMyReview(getStrvMember());
 
-            return ResponseEntity.ok(new Message(StatusCode.OK, myReviews));
-        }
-
-        @GetMapping("/reply")
-        public ResponseEntity<Message> getMyReplies() {
-            ResReplyListDto myReplies = myPageService.getMyReply(getStrvMember());
-            return ResponseEntity.ok(new Message(StatusCode.OK, myReplies));
-        }
-
-        @GetMapping("/member")
-        public ResponseEntity<Message> getMemberProfile() {
-            MemberProfileDto memberProfileDto = myPageService.getMemberProfile(getStrvMember());
-            Message message = new Message(StatusCode.OK, memberProfileDto);
-            return ResponseEntity.ok(message);
-        }
+        return ResponseEntity.ok(new Message(StatusCode.OK, myReviews));
     }
+
+    @GetMapping("/reply")
+    public ResponseEntity<Message> getMyReplies() {
+        List<ResReplyListDto> myReplies = myPageService.getMyReply(getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK, myReplies));
+    }
+
+
+    @GetMapping("/member")
+    public ResponseEntity<Message> getMemberProfile() {
+        MemberProfileDto memberProfileDto = myPageService.getMemberProfile(getStrvMember());
+        Message message = new Message(StatusCode.OK, memberProfileDto);
+        return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("/reviewLike") //내가 좋아요 누른 리뷰
+    public ResponseEntity<Message> getMyReviewLikes() {
+        List<ResReviewListDto> myReviewLikes = myPageService.getMyReviewLikes(getStrvMember());
+        return ResponseEntity.ok(new Message(StatusCode.OK, myReviewLikes));
+    }
+}
 

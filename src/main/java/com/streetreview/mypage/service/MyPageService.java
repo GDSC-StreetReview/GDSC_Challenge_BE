@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface MyPageService {
     List<ResReviewListDto> getMyReview(Long memberId);
 
-    ResReplyListDto getMyReply(Long ReplyId);
-
     MemberProfileDto getMemberProfile(Long memberId);
+
+    List<ResReviewListDto> getMyReviewLikes(Long memberId);
+
+    List<ResReplyListDto> getMyReply(Long memberId);
 }
