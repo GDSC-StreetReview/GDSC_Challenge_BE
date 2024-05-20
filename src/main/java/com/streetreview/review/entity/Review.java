@@ -33,8 +33,6 @@ public class Review {
     @Column(columnDefinition = "text")
     private String content;
 
-    private String photo;
-
     private int likey;
 
     @CreatedDate
@@ -44,7 +42,6 @@ public class Review {
     private Timestamp updatedDate;
 
     private Double x;
-
     private Double y;
 
     @ManyToOne
@@ -63,10 +60,9 @@ public class Review {
     private int reportCount = 0;
 
     @Builder
-    public Review(Long reviewId, String content, String photo, int likey, Timestamp createdDate, Timestamp updatedDate, Double x, Double y, Member member) {
+    public Review(Long reviewId, String content, int likey, Timestamp createdDate, Timestamp updatedDate, Double x, Double y, Member member) {
         this.reviewId = reviewId;
         this.content = content;
-        this.photo = photo;
         this.likey = likey;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
