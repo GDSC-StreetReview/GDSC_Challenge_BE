@@ -51,8 +51,8 @@ public class MyPageServiceImpl implements MyPageService {
         memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
-        return replyRepository.findByMember_memberId(memberId).stream()
-                .map(reply -> {
+        return replyRepository.findByMember_memberId(memberId)
+                .stream().map(reply -> {
                     MemberProfileDto memberProfileDto = reply.getMember().toMemberProfileDto();
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(reply.getReplyId()), PhotoType.REPLY.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());

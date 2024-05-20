@@ -3,6 +3,7 @@ package com.streetreview.reply.service;
 import com.streetreview.file.entity.Photo;
 import com.streetreview.file.entity.PhotoType;
 import com.streetreview.file.repository.PhotoRepository;
+import com.streetreview.member.dto.MemberProfileDto;
 import com.streetreview.member.entity.Member;
 import com.streetreview.member.handler.CustomException;
 import com.streetreview.member.handler.StatusCode;
@@ -77,10 +78,12 @@ public class ReplyServiceImpl implements ReplyService {
     public List<ResReplyListDto> getAllReplyList(Long reviewId) {
         return replyRepository.findByReview_ReviewId(reviewId)
                 .stream().map(reply -> {
+                    MemberProfileDto memberProfileDto = reply.getMember().toMemberProfileDto();
                     List<String> photoUrlList = photoRepository.findByTargetIdAndType(String.valueOf(reply.getReplyId()), PhotoType.STREET.getValue())
                             .stream().map(Photo::getFileUrl).collect(Collectors.toList());
-                    return reply.toResReplyListDto(reply.getMember().toMemberProfileDto(), photoUrlList);
-                }).collect(Collectors.toList());
+                    return reply.toResReplyListDto(memberProfileDto, photoUrlList);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
