@@ -1,7 +1,6 @@
 package com.streetreview.review.service;
 
 
-import com.streetreview.common.dto.Message;
 import com.streetreview.file.entity.Photo;
 import com.streetreview.file.entity.PhotoType;
 import com.streetreview.file.repository.PhotoRepository;
@@ -14,18 +13,14 @@ import com.streetreview.review.entity.Review;
 import com.streetreview.review.entity.ReviewLike;
 import com.streetreview.review.repository.ReviewLikeRepository;
 import com.streetreview.review.repository.ReviewRepository;
-import com.streetreview.street.entity.Street;
 import com.streetreview.street.repository.StreetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
