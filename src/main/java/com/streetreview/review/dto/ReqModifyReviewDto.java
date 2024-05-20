@@ -15,14 +15,12 @@ import java.sql.Timestamp;
 public class ReqModifyReviewDto {
 
     private String content;
-    private String photo;
     @LastModifiedDate
     private Timestamp updatedDate;
 
     @Builder
-    public ReqModifyReviewDto(String content, String photo, Timestamp updatedDate) {
+    public ReqModifyReviewDto(String content, Timestamp updatedDate) {
         this.content = content;
-        this.photo = photo;
         this.updatedDate = updatedDate;
     }
 }
