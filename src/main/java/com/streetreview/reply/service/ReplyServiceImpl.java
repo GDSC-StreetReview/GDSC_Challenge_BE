@@ -92,7 +92,7 @@ public class ReplyServiceImpl implements ReplyService {
 
         // 댓글 찾아서 reportCount 증가
         replyRepository.findByReplyId(reqReportReplyDto.getReplyId())
-                .ifPresent(reply -> {
+                .map(reply -> {
                     reply.increaseReplyCount(1);
                     replyRepository.save(reply);
 
@@ -100,6 +100,8 @@ public class ReplyServiceImpl implements ReplyService {
                     if (reply.getReportCount() >= 5) {
                         replyRepository.delete(reply);
                     }
-                });
+                    return reply;
+                })
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
     }
 }
