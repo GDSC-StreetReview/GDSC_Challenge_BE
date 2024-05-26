@@ -3,7 +3,39 @@
   <h1 float="right">GDSC Solution Challenge Backend Team</h1>
 </div>
 
+---
+<br/><br/>
 
-jenkins Test5
 
-거리 리뷰 웹 서비스
+## 🧑🏻‍💻 프로젝트 목표 및 상세 설명
+
+---
+
+<br/><br/>
+
+## 🛠️ 개발 언어 및 활용 기술
+
+---
+- Springboot
+- Java 17
+- Gradle
+- Spring Data JPA
+- MySQL
+- MongoDB
+
+
+
+
+<br/><br/>
+
+## ⚙ 시스템 아키텍처
+
+<br/><br/>
+
+## 📄 ERD 설계
+![img.png](img.png)
+
+<br/><br/>
+## 🌊 플로우 차트
+![img_1.png](img_1.png)
+
