@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -102,24 +103,30 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void likeReview(String reviewId, Long memberId) {
-        // 리뷰 ID와 회원 ID를 사용하여 리뷰와 회원을 조회
+
         Review review = reviewRepository.findByReviewId(Long.valueOf(reviewId))
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
 
-        // 좋아요 눌렀는지 확인
-        if (reviewLikeRepository.existsByReviewAndMember(review, member)) {
-            throw new CustomException(StatusCode.ALREADY_LIKED);
+
+        Optional<ReviewLike> reviewLikeOptional = reviewLikeRepository.findByReviewAndMember(review, member);
+
+        if (reviewLikeOptional.isPresent()) {
+            // 이미 좋아요를 누른 경우, 좋아요 취소
+            ReviewLike reviewLike = reviewLikeOptional.get();
+            reviewLikeRepository.delete(reviewLike);
+            review.decreaseLikey();
+        } else {
+            // 좋아요가 눌리지 않은 경우, 좋아요 추가
+            ReviewLike reviewLike = ReviewLike.createReviewLike(review, member, true);
+            reviewLikeRepository.save(reviewLike);
+            review.increaseLikey();
         }
 
-        // 좋아요 추가하고 저장
-        review.increaseLikey();
         reviewRepository.save(review);
-
-        ReviewLike reviewLike = ReviewLike.createReviewLike(review, member, true);
-        reviewLikeRepository.save(reviewLike);
     }
+
 
     @Override
     public List<ResReviewListDto> viewPagingReviewList(ReqStreetPointDto reqStreetPointDto, Pageable pageable) {
