@@ -112,4 +112,8 @@ public class Review {
     public void increaseLikey() {
         this.likey++;
     }
+
+    public void decreaseLikey() {
+        this.likey--;
+    }
 }
