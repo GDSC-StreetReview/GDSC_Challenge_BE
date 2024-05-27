@@ -17,7 +17,7 @@ import static com.streetreview.member.security.JwtInfoExtractor.getStrvMember;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://semtle.catholic.ac.kr:3000"})
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
@@ -42,7 +42,7 @@ public class ReviewController {
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
 
-    @PatchMapping("/{reviewId}")
+    @PatchMapping("/delete/{reviewId}")
     public ResponseEntity<Message> modifyReviews(@PathVariable Long reviewId) {
         reviewService.deleteReview(reviewId, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
