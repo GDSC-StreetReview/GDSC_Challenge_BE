@@ -92,7 +92,8 @@ public class ReviewServiceImpl implements ReviewService {
                     reviewRepository.save(review);
 
                     if (review.getReportCount() >= 5) {
-                        reviewRepository.delete(review);
+                        review.setContent(DELETED);
+                        reviewRepository.save(review);
                     }
                     return review;
                 })
