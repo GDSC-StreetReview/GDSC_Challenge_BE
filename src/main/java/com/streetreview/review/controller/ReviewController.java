@@ -42,7 +42,7 @@ public class ReviewController {
         return ResponseEntity.ok(new Message(StatusCode.OK));
     }
 
-    @PatchMapping("/{reviewId}")
+    @PatchMapping("/delete/{reviewId}")
     public ResponseEntity<Message> modifyReviews(@PathVariable Long reviewId) {
         reviewService.deleteReview(reviewId, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
