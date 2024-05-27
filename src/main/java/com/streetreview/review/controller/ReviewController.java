@@ -2,6 +2,7 @@ package com.streetreview.review.controller;
 
 import com.streetreview.common.dto.Message;
 import com.streetreview.member.handler.StatusCode;
+import com.streetreview.review.dto.ReqIsLikeReviewDto;
 import com.streetreview.review.dto.ReqReportReviewDto;
 import com.streetreview.review.dto.ReqStreetPointDto;
 import com.streetreview.review.dto.ReqWriteReviewDto;
@@ -62,5 +63,9 @@ public class ReviewController {
     @GetMapping("/paging")
     public ResponseEntity<Message> getPagingReviews(@PageableDefault(page = 0, size = 10) Pageable pageable, @RequestBody ReqStreetPointDto reqStreetPointDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.viewPagingReviewList(reqStreetPointDto, pageable)));
+    }
+    @GetMapping("/isLike")
+    public ResponseEntity<Message> isLikeReview(@RequestBody ReqIsLikeReviewDto reqIsLikeReviewDto) {
+        return ResponseEntity.ok(new Message(StatusCode.OK, reviewService.isLikeReview(reqIsLikeReviewDto.getReviewId(), getStrvMember())));
     }
 }

@@ -139,4 +139,13 @@ public class ReviewServiceImpl implements ReviewService {
                     return review.toResReviewListDto(review.getMember().toMemberProfileDto(), photoUrlList);
                 }).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isLikeReview(Long reviewId, Long memberId) {
+        Review review = reviewRepository.findByReviewId(reviewId)
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
+        return reviewLikeRepository.existsByReviewAndMember(review, member);
+    }
 }

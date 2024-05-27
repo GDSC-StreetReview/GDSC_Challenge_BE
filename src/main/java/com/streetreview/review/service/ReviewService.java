@@ -19,4 +19,6 @@ public interface ReviewService {
     void likeReview(String reviewId, Long memberId);
 
     List<ResReviewListDto> viewPagingReviewList(ReqStreetPointDto reqStreetPointDto, Pageable pageable);
+
+    boolean isLikeReview(Long reviewId, Long memberId);
 }
