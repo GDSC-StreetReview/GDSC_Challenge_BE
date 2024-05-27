@@ -87,14 +87,16 @@ public class ReviewServiceImpl implements ReviewService {
     public void reportReview(ReqReportReviewDto reqReportReviewDto, Long memberId) {
 
         reviewRepository.findByReviewId(reqReportReviewDto.getReviewId())
-                .ifPresent(review -> {
+                .map(review -> {
                     review.increaseReportCount(1);
                     reviewRepository.save(review);
 
                     if (review.getReportCount() >= 5) {
                         reviewRepository.delete(review);
                     }
-                });
+                    return review;
+                })
+                .orElseThrow(() -> new CustomException(StatusCode.NOT_FOUND));
     }
 
     @Override
