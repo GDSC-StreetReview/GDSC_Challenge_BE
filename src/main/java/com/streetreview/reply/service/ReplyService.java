@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReplyService {
     ResReplyIdDto writeReply(ReqWriteReplyDto reqWriteReplyDto, Long memberId);
 
-    void deleteReply(ReqDeleteReplyDto reqDeleteReplyDto, Long memberId);
+    void deleteReply(Long replyId, Long memberId);
 
     List<ResReplyListDto> getAllReplyList(Long review);
 
