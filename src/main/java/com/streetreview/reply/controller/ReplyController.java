@@ -25,7 +25,7 @@ public class ReplyController {
     public ResponseEntity<Message> writeReply(@RequestBody ReqWriteReplyDto reqWriteReplyDto) {
         return ResponseEntity.ok(new Message(StatusCode.OK, replyServiceImpl.writeReply(reqWriteReplyDto, getStrvMember())));
     }
-    @DeleteMapping("/{replyId}") // 댓글 삭제
+    @DeleteMapping("/delete/{replyId}") // 댓글 삭제
     public ResponseEntity<Message> deleteReply(@PathVariable(name = "replyId")Long replyId) {
         replyServiceImpl.deleteReply(replyId, getStrvMember());
         return ResponseEntity.ok(new Message(StatusCode.OK));
