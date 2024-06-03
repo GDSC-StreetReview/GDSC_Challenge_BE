@@ -15,3 +15,4 @@ public interface ReplyService {
 
     void reportReply(ReqReportReplyDto reqReportReplyDto, Long memberId);
 }
+
