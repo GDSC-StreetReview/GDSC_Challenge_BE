@@ -67,10 +67,10 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     @Transactional
-    public void deleteReply(ReqDeleteReplyDto reqDeleteReplyDto, Long memberId) {
+    public void deleteReply(Long replyId, Long memberId) {
         //리뷰가 있는지 먼저 확인하기
         //댓글을 삭제하려는 사람이 작성자 본인인지 확인하기
-        replyRepository.findByReplyId(reqDeleteReplyDto.getReplyId())
+        replyRepository.findByReplyId(replyId)
                 .ifPresent(reply -> replyRepository.deleteByReplyIdAndMember_memberId(reply.getReplyId(), memberId));
     }
 
