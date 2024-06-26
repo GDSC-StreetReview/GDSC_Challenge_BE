@@ -47,5 +47,6 @@ public class StreetController {
     public ResponseEntity<Message> test() {
 
         return ResponseEntity.ok(new Message(StatusCode.OK, streetService.test()));
+
     }
 }
